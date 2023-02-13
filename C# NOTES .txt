@@ -1,0 +1,553 @@
+******************************DAY #1**********************************
+
+.NET framework - 2019 - latest version - 4.72 - windows os
+.NET core - 1.0, 1.1, 2.0, 2.1, 2.2, 3.0, 5.0,6.0 and 7.0 - windows, mac, linux os
+
+Types of Projects/Applications:
+1. Desktop apps - console (without GUI) / windows(wpf) - with GUI
+2. Web apps - client, server
+3. mobile apps - xamarin 
+
+what is .NET core - framework
+
+1. platform - develop, compile, execute the projects
+2. BCL - base class libraries 
+3. CLR - Common Language Runtime 
+4. Programming Languages - C#.NET, VB.NET, F#.NET
+
+C# source code --> C# compiler --> MSIL/CIL (Microsoft Intermediate Language)--> CLR
+VB source code --> VB compiler --> MSIL/CIL --> CLR (JIT compiler) --> Native code --> OS
+
+.NET core does not support pointers and multiple inheritance
+Memory management is taken care by CLR
+
+Managed code - Codes that can be managed by CLR.
+Unmanaged code - CLR does not take the responsibility of these unmanaged codes.
+
+CLS - Common Language specification - set of rules that any language as a part of 
+.net family should follow
+CTS - Common Type System -
+int i;
+i:number 
+Dim i as integer
+integer i;
+
+------------C# Garbage Collector--------------
+ - The .NET FRAMEWORK Provides an Automatic Memory Management
+	Human rahul = new Human(); //allocates Memory
+ - The FRAMEWORK takes care of reclaiming memory for reuse in the system, once Objects are no longer being used.
+ - You dont have to manually call the garbage collector (BUT YOU CAN)
+ - The Garbage collector requires processing power
+ - The GC's Goal is to free up memory but not use too much processing power
+ - Memory isn't necessarily reclaimed right away
+ - You can implement the finalizer method to execute code just before an object is released from memory by the GC.
+
+					---When It Runs?---
+ - When the system has low Physical Memory
+ - When the Memory allocated exceeds a pre-set threshold
+ - When GC.Collect() is called. Even though this is a tricky method
+
+----------------------------------------------
+
+To create a new project in .NET core:
+	1. dotnet new console --name firstconsoleapp
+
+	source code --> compile(syntax error is checked) --> build (dependencies are linked) --> executed 
+
+	2. dotnet build - compiles and builds our project, bin folder is getting created after build is successful.
+
+	3. dotnet run - to execute the output of the project
+
+-----SUPER DATATYPE-----
+Object is the datatype in which all other datatypes can be stored without conversion.
+
+
+
+------Types of Type conversions:--------
+	1. Implicit - int --> float (automatically) 
+	2. Explicit - float --> int ( loss of data)
+	3. Boxing - convert a value type to a reference type 
+	4. UnBoxing - convert a reference type to a value type
+
+------Datatypes in .NET core----------
+	1. int, float, datetime, bool, struct, enum - value types
+	2. string, object, class, delegates, interface - reference types
+	
+	int i=10;
+	string s="Ram"; --> s contains the address of the memory which holds Ram
+	Eg: Console.ReadLine() --> returns string --> int, bool, datetime, float --> Unboxing
+
+------Structure of a Console App------
+	In a solution, there can be multiple projects
+		In a project, there can be multiple namespaces
+			In a namespace, there can be multiple classes,.....
+
+__________HOMEWORK/ASSIGNMENT OF DAY #1____________
+	1. create a console app in c# to get three marks and calculate the average.
+		If avg is between 40 and 50 - pass
+		50 - 60 - average
+		60 - 70 - good
+		70 - 80 - excellent
+		80 - 100 - outstanding
+		using if else
+
+	2. create a console app in c# to get the age of a person
+		and print senior citizen if above 60
+		adult - 30 - 60
+		youngster - 15-30
+		child - below 15
+		using switch case
+
+******************************DAY #2**********************************
+
+-------------OOPS concept---------------
+	1. Class - Generalization concepts - User defined datatype
+	A class is an entity which has its own member variables and member functions.
+	2. Object - specializaiton - instance of a class
+	3. Data Encapsulation - wrapping of member variables and methods into an entity called class.
+	4. Data Abstraction - Hiding of unnecessary details and projecting necessary information to the client app.
+
+
+------------Constructors----------------
+	A constructor is a special method that is used to initialize objects. The advantage of a constructor, is that it is called when an object of a class is created. It can be used to set initial values for fields
+
+	Note that the constructor name must match the class name, and it cannot have a return type (like void or int). Also note that the constructor is called when the object is created. All classes have constructors by default: if you do not create a class constructor yourself, C# creates one for you. However, then you are not able to set initial values for fields.
+ 	- Constructors save time!
+ 	- Constructors can also take parameters, which is used to initialize fields.
+	- Just like other methods, constructors can be overloaded by using different numbers of parameters.
+
+------------Access Specifiers-------------(MAKE NOTES)
+
+	Data abstraction is implemented through access specifiers:
+		1. private - 
+		2. protected
+		3. internal - with in the same namespace 
+		4. public 
+	There's also two combinations: protected internal and private protected
+
+	class member variables are private by default.
+	namespace - public
+	class - internal
+	
+	Why Access Modifiers?
+ 	- To control the visibility of class members (the security level of each individual class and class member).
+ 	- To achieve "Encapsulation" - which is the process of making sure that "sensitive" data is hidden from users. This is done by declaring fields as private.
+
+--------------Properties------------------
+	Why to use it?
+	 - Sometimes its hard to manage 1000's of variables in a live project, so C# gives us a way to set up these very quickly.
+	 Properties: getters and setters
+	
+	---read and write prop--
+	1. 	public int Eid{get;set;} // this does'nt require the field to be explicitly written
+
+	---read only properties--- 
+		public int Eid{get;}
+
+
+	// LINE 1: Internally or can written as // this requires field to be written
+	private string name; // field
+
+  	public string Name   // property
+  	{
+    		get { return name; }   // get method
+    		set { name = value; }  // set method
+  	}
+
+	EXPLAINATION:
+		- The Name property is associated with the name field. It is a good practice to use the same name for both the property and the private field, but with an uppercase first letter.
+		- The get method returns the value of the variable name.
+		- The set method assigns a value to the name variable. The value keyword represents the value we assign to the property.
+-------------Inheritance------------------
+	
+	In C#, it is possible to inherit fields and methods from one class to another. We group the "inheritance concept" into two categories:
+		1. Derived Class (child) - the class that inherits from another class
+		2. Base Class (parent) - the class being inherited from
+	To inherit from a class, use the : symbol.
+	
+	Example: 
+	class Vehicle  // base class (parent) 
+	{
+  		public string brand = "Ford";  // Vehicle field
+  		public void honk()             // Vehicle method 
+  		{                    
+    			Console.WriteLine("Tuut, tuut!");
+  		}
+	}
+
+	class Car : Vehicle  // derived class (child)
+	{
+  		public string modelName = "Mustang";  // Car field
+	}
+
+	--------virtual methods-------- 
+	Those methods which have definition in the base class and are allowing the derived class to have their own definitions by overriding these methods in the derived class.
+
+	If the reference variable is of base class and the memory is alloted of derived
+	Shape s =new Rectange, Then -> 
+
+		1. if new method is in derived class - base class method is called
+		2. if override method is in derived class - derived class method is called.
+
+__________HOMEWORK/ASSIGNMENT OF DAY #2____________
+
+Create a Employee Class with following properties:
+ - Empid
+ - Empname
+ - Salary
+ - Doj
+
+Methods:
+ 1. AcceptDetails()
+ 2. DisplayDetails()
+ 3. CalculateSalary()
+
+Create two derived classes of Employee class 
+ 1. Permenant
+ 2. Trainee
+
+In Permenant class, have following Properties:
+ - Basicpay
+ - HRA
+ - DA
+ - PF
+
+Methods:
+ 1. GetDetails()
+ 2. ShowDetails()
+ 2. CalculateSalary() method has to be overrided with new definition. Calculate the salary by adding basicpay, hra, da and deducting pf.
+
+In Trainee Class, have following properties:
+ - bonus
+ - Projectname
+
+Methods:
+ 1. GetTraineeDetails()
+ 2. ShowTraineeDetails()
+ 3. CalculateSalary() method has to be overrided with new definition. If Projectname is "Banking" 5% of salary should be added as bonus to the salary. If Projectname is "Insurance" 10% of salary should be added as bonus to the salary
+
+In Client program, Create instance of permenant employee and trainee and call all the relevant methods.
+
+******************************DAY #3**********************************
+
+--------Abstract method--------(MAKE NOTES)
+	A method without a definition or an implementation is called an abstract method.
+
+
+
+--------Abstract class---------(MAKE NOTES)
+	Abstract class can contain both abstract and non abstract methods.
+	Abstract classes cannot be instantiated because it contains a method without a definition.
+	It has to be inherited.
+
+	Data abstraction is the process of hiding certain details and showing only essential information to the user. Abstraction can be achieved with either abstract classes or interfaces.
+	- The abstract keyword is used for classes and methods
+	- Abstract class: is a restricted class that cannot be used to create objects (to access it, it must be inherited from another class).
+	- Abstract method: can only be used in an abstract class, and it does not have a body. The body is provided by the derived class (inherited from).
+	- An abstract class can have both abstract and regular methods
+	
+	Example:
+	abstract class Animal 
+	{
+  		public abstract void animalSound();
+  		public void sleep() 
+  		{
+    			Console.WriteLine("Zzz");
+  		}
+	}
+
+--------Sealed class-----------(MAKE NOTES)
+	Sealed classes cannot be inherited and has to be instantiated. 
+	Completely opposite of abstract Classes.
+
+--------Partial class---------(MAKE NOTES)
+	Definitions across multiple places within the same namespace.
+
+--------Static class----------(MAKE NOTES)
+	They cannot be instantiated nor be inherited.
+	All the properties and methods of a static class should be static.
+
+
+--------Interface-----------(MAKE NOTES)
+	- The set of rules/specifications for an entity is defined.
+	- All methods and properties of an interface are public.
+	- If a class implements an interface, it has to define all the methods of the interface.
+      - An interface is a completely "abstract class", which can only contain abstract methods and properties (with empty bodies)
+	- By default, members of an interface are abstract and public.
+
+	It is considered good practice to start with the letter "I" at the beginning of an interface, as it makes it easier for yourself and others to remember that it is an interface and not a class.
+	
+	Note: Interfaces can contain properties and methods, but not fields.
+	Note: You do not have to use the override keyword when implementing an interface
+
+	- To access the interface methods, the interface must be "implemented" (kinda like inherited) by another class. To implement an interface, use the : symbol (just like with inheritance). The body of the interface method is provided by the "implement" class. 
+
+	- Like abstract classes, interfaces cannot be used to create objects (in the example above, it is not possible to create an "IAnimal" object in the Program class)
+	- Interface methods do not have a body - the body is provided by the "implement" class
+	- On implementation of an interface, you must override all of its methods
+	- Interfaces can contain properties and methods, but not fields/variables
+	- Interface members are by default abstract and public
+	- An interface cannot contain a constructor (as it cannot be used to create objects)
+
+	Why And When To Use Interfaces?
+		1. To achieve security - hide certain details and only show the important details of an object (interface).
+		2. C# does not support "multiple inheritance" (a class can only inherit from one base class). However, it can be achieved with interfaces, because the class can implement multiple interfaces. 
+		Note: To implement multiple interfaces, separate them with a comma OR To implement multiple interfaces, separate them with a comma.
+-----------------------------Assemblies--------------------------(MAKE NOTES)
+
+ - build artifacts(Portable Executable(PE)) + metadata (information about itself)
+ - output of a project can be either exe or dll
+-----------------------------EXE's------------------------------(MAKE NOTES)
+exe: executable file - It will have a memory of its own. OS can directly invoke the exes.
+-----------------------------DLL's------------------------------(MAKE NOTES)
+ - dlls - (dynamic link library) - reusable piece of code which can be used across multiple projects. They will not have memory of their own. 
+ - They reside in the memory of the host application and when the host applications gets closed, the dlls also gets closed.
+
+-----------------------------Class LIB Creation--------------------------(MAKE NOTES)
+	1. To create a class lib:
+
+     	// It can't be run or executed
+
+		1. dotnet new classlib -o MyLib --> 
+		2. dotnet build MyLib.csproj
+
+	// For Testing class libs, we use UNIT TESTING!
+
+	2.In The exe project (Console Application), give reference of dll (Class Lib Project) in .csproj File
+  		<ItemGroup>
+    			<ProjectReference Include="..\MyLib\MyLib.csproj" />
+  		</ItemGroup>
+
+******************************DAY #4**********************************
+
+-----------------------------Exceptions---------------------------------
+	Debugging: launch.json - console- externalTerminal
+	---Types of Errors---
+		1. Syntax Error - rectified
+		2. Logical Error - debugged
+		3. Runtime Error - cannot be rectified but can be handled.
+
+			Using the three blocks:
+				1. try
+				2. catch
+				3. finally
+
+	Exception class is the base class from which two derived classes are inherited:
+		1. SystemException - predefined or built in exceptions
+		2. ApplicationException - User defined exception
+
+	- Try block will contain those set of statements which might cause an exception. One try block can be followed by catch or finally.
+	- Catch block is the handler in which the exceptions are handled. One try block can have multiple catch blocks and base class Exception catch block should be the last one.
+	- Finally block is called irrespective of the exception occurs or not. Mostly it contains code to release the resources. 
+	When executing C# code, different errors can occur: coding errors made by the programmer, errors due to wrong input, or other unforeseeable things. When an error occurs, C# will normally stop and generate an error message. The technical term for this is: C# will throw an exception (throw an error).
+
+	The try statement allows you to define a block of code to be tested for errors while it is being executed.
+	The catch statement allows you to define a block of code to be executed, if an error occurs in the try block.
+
+	The try and catch keywords come in pairs
+		try 
+		{
+  			//  Block of code to try
+		}
+		catch (Exception e)
+		{
+			//  Block of code to handle errors
+		}
+		finally{
+		
+		}
+
+-------------------------Collections-------------------------------- (MAKE NOTES)
+	1. Non-generic collections - All datatype values can be stored in non generic collections.
+  		- ArrayList 
+  		- Hashtable
+	2. Generic collections
+  		- List
+  		- Dictionary
+  		- Stack
+  		- Queue
+  		- HashSet
+
+__________HOMEWORK/ASSIGNMENT OF DAY #4____________
+Create a Product class with the following properties:
+ - pid - int
+ - pname- string
+ - price - float
+ - qty- int
+
+create an interface IProduct which has the following methods:
+
+ 1. AddProduct() - to add a product to the list of products
+ 2. Getproducts() - to return a List of products
+ 3. RemoveProduct() - to remove a product from list
+
+---TASKS:
+  1. Implement product class from IProduct
+  2. If price is less than 0 raise exception accordingly with suitable messages
+  3. Ensure qty should be minimum 3 for every product, else raise exception
+
+******************************DAY #5**********************************
+------------------------Files-----------------------
+1. Filestream - class which has methods related to creation of files.
+2. StreamWriter/StreamWriter
+
+Use the File class for typical operations such as copying, moving, renaming, creating, opening, deleting, and appending to a single file at a time. You can also use the File class to get and set file attributes or DateTime information related to the creation, access, and writing of a file. If you want to perform operations on multiple files, see Directory.GetFiles or DirectoryInfo.GetFiles.
+
+Many of the File methods return other I/O types when you create or open files. You can use these other types to further manipulate a file. For more information, see specific File members such as OpenText, CreateText, or Create.
+
+Because all File methods are static, it might be more efficient to use a File method rather than a corresponding FileInfo instance method if you want to perform only one action. All File methods require the path to the file that you are manipulating.
+
+The static methods of the File class perform security checks on all methods. If you are going to reuse an object several times, consider using the corresponding instance method of FileInfo instead, because the security check will not always be necessary.
+
+By default, full read/write access to new files is granted to all users.
+
+Enumeration - Description
+FileAccess  - Specifies read and write access to a file.
+FileShare	- Specifies the level of access permitted for a file that is already in use.
+FileMode	- Specifies whether the contents of an existing file are preserved or overwritten, and whether requests to create an existing file cause an exception.
+
+------------------------Delegates------------------------
+	Delegates:
+		- A Delegate is a type that can hold a reference to a method.
+		- When you call a delegate method reference will get called.
+
+	How To USE IT?
+	
+	1. Defining the DELEGATE: 
+	(Access Specifier) delegate (Return Type) DELEGATE_NAME(Parameters);
+	
+	2. next step is to create a variable of this delegate type
+		(Access Specifier) DELEGATE_NAME VARIABLE_NAME;
+	This variable can hold or store reference to any method as long as it has void as the return type and takes no parameter(if not specified in defn. ), Otherwise error is created when we try to store an float inside an int variable.
+
+	3. Using the Delegate:
+		Create a method which needs to be referenced as defined by the above rules -> 
+	  	ObjectTOBeAttachedWithDELEGATE.DELEGATE_NAME = METHOD_NAME; //Without () as we are just referencing it here only;
+
+		EXAMPLE : Let' s Say we have a UI (LOGIN BUTTON) -> -----SEND-----
+		We need a piece of code, once the SEND button is clicked with mouse to be executed:
+
+		//PROBLEM we as the developer of the system/UI can't tell what the other developers using our UI system, on what the button should do when it is clicked. That' s Why we need to 		provide ON_CLICK EVENT as a DELEGATE and not as a normal method and since a DELEGATE stores a reference to a method -> Other developers can write their own implementation 			inside a method that contains a logic they want what dhould happen on a click and then assign it to the button.
+	
+	1. DEFINATION OF DELEGATE ->
+		private delegate void OnClickDelegate();
+	2. VARIABLE DEFTINATION ->
+		public OnClickDelegate OnClick; 
+	METHOD DEFINATION -> 
+		void SendButtonClick(){
+			Network.Connect();
+			Network.SendMessage();
+			DisplayMessageSendDialog();	
+		}
+	REFERENCING A DELEGATE ->
+		SendButton.OnCLick = SendButtonClick;
+	
+	------///////------
+	UI SYSTEM WILL CALL OnCick();
+
+
+	1. single cast delegate - which points to a single method
+
+	2. multi cast delegate -  which can point to multiple methods.
+
+	EX:
+				using System;
+				using System.IO;
+				namespace DelLambdaEg{
+
+    		public delegate void printmsg(string msg);
+    		class MultiCastDel
+    		{
+        		public static void printtoconsole(string msg)
+        		{
+           			 System.Console.WriteLine("Hello "+msg);
+        		}
+
+        		public static void printtoFile(string msg)
+        		{
+                		FileStream fss=new FileStream("msglog.txt",FileMode.Append,FileAccess.Write);
+                		StreamWriter sw=new StreamWriter(fss);
+                		sw.WriteLine(msg+DateTime.Now);
+                		sw.Flush();
+                		fss.Close();
+        		}
+        		public static void main()
+        		{
+            		printmsg p1=new printmsg(printtoconsole);
+            		printmsg p2=new printmsg(printtoFile); //Single Cast Delegate;
+            		printmsg p3=p1+p2; //multicast Delegate
+            		System.Console.WriteLine("Enter the string");
+            		string data=Console.ReadLine();
+            		p3(data);
+
+        		}
+
+    		}
+		}
+
+__________HOMEWORK/ASSIGNMENT WEEKEND PROJECT____________
+
+1) Create a class library project called 'BankLibrary' with the following classes:
+* SBAccount class
+- AccountNumber
+- CustomerName
+- CustomerAddress
+- CurrentBalance
+
+* SBTransaction class
+- TransactionId
+- TransactionDate
+- AccountNumber
+- Amount
+- TransactionType
+
+* Add an interface IBankRepository with the following methods:
+public interface IBankRepository
+{
+  void NewAccount(SBAccount acc);
+  List<SBAccount> GetAllAccounts();
+  SBAccount GetAccountDetails(int accno);
+  void DepositAmount(int accno, decimal amt);
+  void WithdrawAmount(int accno, decimal amt);
+  List<SBTransaction> GetTransactions(int accno);
+}
+
+* Implement the interface in a class called "BankRepository":
+- The class should contain a collection of SBAccount class, and another collection of SBTransaction class.
+ Use generic List for both.
+- The "New Account" method must add the details of a new account to the SBAccount collection.
+- Given an account number, the "Get Details of an Account" method must return the details of the account. If the account number is not in the list, exception must be thrown.
+- The "Get Details of all Accounts" must return the details of all the accounts.
+- The "Deposit Amount" and "Withdraw Amount" methods must update the current balance in the corresponding account in the SBAccount collection, and add the details of the transaction in the SBTransaction collection.
+- If there is not enough balance in the account, then "Withdraw Amount" method must throw an exception.
+- Given an account number, the "Get Transactions of an Account" should return the details of all the transactions done by the account number.
+
+2) Create a menu-driven console application which uses the bank library.
+
+					EXTRA - RESOURCES
+////////////////////////////////////////////////////////////////////////////
+DOTNET CORE VS DOTNET FRAMEWORK
+https://stackify.com/net-core-vs-net-framework/
+
+https://code-maze.com/csharp-access-modifiers/
+
+//IMPORTANT NOTES -Method Hiding and Overriding
+
+https://www.tutorialspoint.com/difference-between-method-overriding-and-method-hiding-in-chash#:~:text=For%20Method%20overriding%20override%20keyword,new%20implementation%20in%20child%20class.&text=In%20Method%20Overriding%20the%20implementation,hiding%20is%20of%20reference%20type.
+
+https://www.geeksforgeeks.org/difference-between-method-overriding-and-method-hiding-in-c-sharp/
+
+WHEN YOU DONT USE VIRTUAL, NEW, OVERRIDE KEYWORDS ON A METHOD!!
+The output from the example above was probably not what you expected. That is because the base class method overrides the derived class method, when they share the same name.
+
+//namespace
+https://www.youtube.com/watch?v=d3Np2_-Jc14
+
+https://www.youtube.com/watch?v=mw254_XAnGU
+
+//Architecture of .NET
+https://dotnet.microsoft.com/en-us/learn/dotnet/what-is-dotnet-framework#:~:text=Architecture%20of%20.NET%20Framework&text=The%20Common%20Language%20Runtime%20(CLR,and%20types%20for%20common%20functionality.
+
+
+Struct VS Class
+https://stackoverflow.com/questions/13049/whats-the-difference-between-struct-and-class-in-net#:~:text=Difference%20between%20Structs%20and%20Classes,to%20an%20object%20in%20memory.

@@ -1,0 +1,192 @@
+----------------------------REACT JS---------------------------
+
+React is a javascript library for building USER INTERFACES.
+like
+- NETFLIX
+
+Here Mobile Apps and Desktop Apps feel very "Reactive": Things happen instantly, you don't wait for new pages to load or actions to start.
+Traditionally, in web apps, you click a link and wait for a new page to load. You click a button and wait for some action to complete.
+	
+	client ----------> Server
+		 <----------
+
+It is a client Side Javascript Library
+All about building modern reactive interfaces for the web
+Declarative,  
+
+NORMAL VANILLA -> IMPERITIVE CODING PRACTICE -> LOW LEVEL CODE (DRY VIOLATED)
+
+BUILDING SPAs (Singel Page Applications):
+ - React can be used to control parts of HTML pages or Entire Pages.
+	- "Widget" approach on a multi-page application. Some Pages are still rendered on and served by a backend server.
+
+ - React can also be used to control the entire frontend of a web application.
+	- Single-Page-Application (SPA) approach. Server only sends one HTML page, thereafter , React takes over and controls the UI.
+	- Smoother UI and Better UX.
+	- (NETFLIX)
+
+-----------------------REACT ALTERNATIVES-----------------------
+
+- REACT.js is a LEAN AND FOCUSED component based UI library. Certain features (eg. ROUTING) are added via community packages. 
+
+- Angular.js is a Complete component-based UI framework, packed with features. Uses TypeScript. Can be Overkill for smaller projects.
+
+- Vue.js is a Component-Based UI framework, includes most care features. A bit less popular than React & Angular.
+
+
+---------Exports and Imports---------
+
+*PERSON.js*
+
+const person = {
+	name:"max"	
+}
+
+export default person
+
+HERE default keyword means that we just import something from that file
+
+*UTITLITY.js*
+
+Exporting Named Stuff ->
+export const clean = () => {...}
+export const baseData = 10;
+
+*APP.js*
+
+
+IMPORTS AND EXPORTS READ.
+
+import person from './person.js'
+import prs from './person.js'
+
+//importing named stuff
+import {baseData} from './utility.js'
+import {clean} from './utility.js'
+
+****************************************Components*****************************************
+React makes building complex, interactive and reactive user interfaces simpler
+React is all about "Components"
+
+Why component and what is it? 
+All UIs are built by the components -> building blocks
+1. Reusability! -> DRY
+2. Seperation of Concerns! -> Don't do too many things in one and the same place (function)
+ 			(-> Split big chunks of code into one and the same place <-)
+
+How is a "Component" Built?
+			HTML + CSS + JS => Components
+			Components..... => UI
+
+React allows you to create these (re-usable and reactive) components consisting of HTML and JavaScript and CSS.
+
+React uses a declarative approach to built these components.
+ - Define the desired target state(s) and let react figure out the actual javascript DOM instructions.
+Here you wont write any dom updating events, with react and its components -> ITS MAGIC
+					BUILD YOUR OWN custom HTML Elements
+
+*******************************Creating first Project**************************************
+for full docs -> visit create-react-app.dev
+Prerequisites : NODE JS must be installed
+
+TO create a REACT project: 
+
+1.	$>: npx create-react-app <APP_NAME>
+
+It will create a subfolder named as <APP_NAME> and switching to that with CD command -> 
+
+2.	$>: cd <APP_NAME>
+
+Then run this command to run a script that will start a local development server at port 3000 and this server will watch your code files (src), if there is any change, it will automatically update the loaded page in browser.
+
+3.	$> npm start
+
+By running this command, it creates preconfigured folders with some basic REACT code files and a bunch of configuration files which will help you to build that react app for production use -> a couple of transformation and optimization steps between developing any REACT App.
+
+
+The Created folder contains alot of files and folders:
+1. package.json -> holds all the dependencies (react + other dev dependencies)
+2. SRC folder -> contains all the source code on which we will be working on.
+
+Command to install all the dependencies -> (packg.json)
+
+4.	$>:npm install
+
+-> creates a node_modules folder -> holds all the packages that get install with above command.
+
+
+Inside that directory, you can run several commands:
+
+  npm start
+   - Starts the development server.
+
+  npm run build
+   - Bundles the app into static files for production.
+
+  npm test
+   - Starts the test runner.
+
+  npm run eject
+   - Removes this tool and copies build dependencies, configuration files and scripts into the app directory. If you do this, you can’t go back!
+
+We suggest that you begin by typing:
+
+ $>: cd my_first_app
+ $>: npm start
+
+
+**************Analysing a Standard React Project**************
+
+Src folder is the one on which we will spend majority of our time.
+
+SRC
+ -> index.js -> this is the first code file which will be executed whenever you visit the site or basically localhost:3000 to be particular. (not exactly it will be run, but it is the starting point and before running on browsers it will be tranformed in a browser friendly version of code, as some features wont work in NORMAL JS but will work after transformation)
+		 -> in this file, we import ReactDOM object from react-dom third party library, which is one of our dependencies. (Basically react is split into 2 packages : REACT and REACTDOM)
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
+
+ -> App.js -> Contains a function named App and we then export this function and inside this function we return some HTML code which wrapped inside (parenthesis) (not regularly see, not a valid JS code) -> this is a JSX (special feature invented by th e react team and it works in JS files because of the transformation steps SRC -> PUBLIC (index.html));
+
+PUBLIC
+ -> index.html -> this is basically the only HTML file that is being used by the overall REACT application as it's a SPA.
+		   -> It is the only entry point, the place where the React-Driven UI should be rendered. NOTE: In this index.html -> regular HTML DOCUMENT STRUCTURE, and if we look at the body, you will find a DIV with ID : 'root'. That's the div where we inject or attach our react-driven UI. (doesn't hold any content initially)
+
+		   This is the root that we select in index.JS to render it, we tell react to make it root. The main place where the React app gets rendered. Then we store this root object in a variable and on that object we call render() to tell react what should be rendered in that DIV. Content inside that div should be replaced by what inside the render method-> above ex: <App />
+
+
+So what is this <App />: -> 
+	import App from './App';
+	 - App is the component (FIRST COMPONENT) which is get rendered in the place of that element with the id of root.
+	 - Root component as its the main component that will get rendered in index.js file
+	 - <App /> -> Its not a regular JS syntax -> called as JSX
+
+	
+**************************JSX***************************
+JSX -> JAVASCRIPT AND XML (HTML == XML) and it works in JS files as because of the npm start process running the code get transformed to more browser-friendly code before everything is being served.
+
+*****************BUILDING OUR COMPONENTS****************
+
+It is a good practice to actually putting these new components into new files so that you have one file per component.
+
+IN THE 
+	->SRC folder add
+		-> COMPONENTS FOLDER
+			-> here add the components source file
+NOTE : Don't move App.js as it is a special kind of component, you can move it but its not considered generally.
+
+With react we build a Component tree as components will get nested sometimes inside one another. You have the app component at the top and other nested inside it.
+	
+			<App/>
+			/	\
+		     /	 \    
+		<Header>   <Tasks/>     (For example)
+				/  |	\
+			     /   |   \
+			    /    |    \
+			   /     |     \
+			<Task/> <Task\> <Task\>
+
+
+
+	
