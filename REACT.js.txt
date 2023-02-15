@@ -187,6 +187,42 @@ With react we build a Component tree as components will get nested sometimes ins
 			   /     |     \
 			<Task/> <Task\> <Task\>
 
+Here Only the top most i.e <App/> is rendered into single HTML Page. All The other components will not be rendered with this React.Render() instruction. They will be used as regular HTML elements inside of our <App/> component.
 
+--------------How is a Component Written in REACT?----------------
 
+1. -> Its just a Javascript Function (Special Kind of function), special due to its return structure.
+
+2. -> We need to create a filename by name of the Component (inside src Folder ) AS (ComponentName.js, Naming convention <3 ONLY)
+ 
+3. -> Inside it write a normal function as -> 
 	
+	function ComponentName(){
+		return (
+		 // JSX - CODE
+		);
+	}
+
+4. -> and to use it we need to export it. otherwise it will be usable only in that file only.
+	
+	export default ComponentName;
+
+5. ->  we can import it in any file we like, Its recommended to import it in App.js component file.
+
+	import ComponentName from './components/ComponentName'; 
+
+(JS knows that it will be js file as it will first search a js file named 'ComponentName');
+
+6. -> <ComponentName></ComponentName> 
+		(In the JSX-CODE)
+
+NOTE: 1. (IMPORTANT!) Its important to name the component starting with a capital letter as REACT distinguish between custom_components and inbuilt HTML ELEMENTS
+	2. You MUST have 1 ROOT ELEMENT / RETURN STATEMENT (WorkAround is Wrap the whole thing inside 1 DIV)
+
+-----------Adding Basic Styling to Components------------
+ -> CSS files are added next to the component file in the SRC folder
+ -> ComponentName.css -> filename
+ -> import that file into the ComponentName for which you wrote that CSS code.
+		By importing that You are telling the build process to consider the file as well;
+
+NOTE : class = className
