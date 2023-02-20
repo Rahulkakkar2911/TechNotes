@@ -165,6 +165,42 @@ So what is this <App />: ->
 **************************JSX***************************
 JSX -> JAVASCRIPT AND XML (HTML == XML) and it works in JS files as because of the npm start process running the code get transformed to more browser-friendly code before everything is being served.
 
+
+In older React Projects you need to (import React from 'react') in all your components files, to be precise you need it where you write JSX code.
+
+
+JSX code is just Syntactic Sugar under the hood its actually transformed to methods called on the React Object. That's we need to import it in the past.
+
+ -> return React.createElement() -> is called when we create JSX, this function takes 3 arguments:
+	1. Element which should be created (in string if built-in), if custom-component then point at the import name which is at above of the file and without string.
+	2. Object that has attributes to above specified Element
+	3. Content between opening and closing tags
+	4
+	5
+	.
+	.
+	.
+	.
+	.
+	jitne elements hai between opening and closing tags of (1) element
+ 
+In previous versions the following JSX the code Which is this:
+	return(
+		<div>
+			<h2> Let's get Started! </h2>
+			<ExpenseItems items = {expenses}/>
+		</div>
+	);
+will look like this:
+	return React.createElement(
+		'div',
+		{},
+		React.createElement('h2', {}, "Let's get Started!"),
+		React.createElement(ExpenseItems, {items: expenses})
+	);
+
+That's why we need to wrap the JSX code in wrapping Div, as we can't write without wrapper in older codes, because we can't return more than 2 things.
+
 *****************BUILDING OUR COMPONENTS****************
 
 It is a good practice to actually putting these new components into new files so that you have one file per component.
@@ -219,6 +255,11 @@ Here Only the top most i.e <App/> is rendered into single HTML Page. All The oth
 NOTE: 1. (IMPORTANT!) Its important to name the component starting with a capital letter as REACT distinguish between custom_components and inbuilt HTML ELEMENTS
 	2. You MUST have 1 ROOT ELEMENT / RETURN STATEMENT (WorkAround is Wrap the whole thing inside 1 DIV)
 
+If the componenet don't have content in between like here -> 
+<ComponentName>HERE!</ComponentName> 
+you can write it as a Single closed tag -> (just like hr, br, img etc);
+<ComponentName/>
+
 -----------Adding Basic Styling to Components------------
  -> CSS files are added next to the component file in the SRC folder
  -> ComponentName.css -> filename
@@ -226,3 +267,182 @@ NOTE: 1. (IMPORTANT!) Its important to name the component starting with a capita
 		By importing that You are telling the build process to consider the file as well;
 
 NOTE : class = className
+
+--------------------Dynamic Data-------------------
+To Enter data that you get from anywhere before return the JSX,
+You can add data in curly braces {} (variable)
+
+ -> Dynamic Placeholders
+
+So between these curly braces you can run basic javascript expression.
+
+				<h2> {1 + 3} </h2>
+
+----------------------PropS-----------------------
+We can make our components reusable, by using parameters and a concept called PROPS in react.
+
+We can pass data from a parent component to its child components.
+
+Props are arguments passed into React components. Props are passed to components via HTML attributes.
+
+Pass Data into our components and adding new data
+
+EG: 	function Car(props) {
+  		return <h2>I am a { props.brand }!</h2>;
+	}
+
+	function Garage() {
+  		return (
+    			<>
+      		<h1>Who lives in my garage?</h1>
+      		<Car brand="Ford" />
+    			</>
+  		);
+	}
+
+	const root = ReactDOM.createRoot(document.getElementById('root'));
+	root.render(<Garage />);
+
+If you have a variable to send, and not a string as in the example above, you just put the variable name inside curly brackets {}
+
+Note: React Props are read-only! You will get an error if you try to change their value. We can't send object as a prop item like (new Date(2012,5,23));
+ 
+ - prop parameter is in the function
+
+-------------- Splitting Components---------------
+Every Component is focused on one task (that can't be broken into more simpler code), and thats why react is component focused we can assign the component a task.
+
+----------------Composition----------------
+Building a UI from small components piece by piece is called as Composition.
+
+Note: You can't use your custom components as wrappers around other kind of content (having content between opening and closing tags doesnt work for custom components as it work for built in html elements)
+and for that to we work we have one special prop that is built in the react (To build resuable wrapper components)
+   -> props.children
+for example -> 
+    <div>{props.children}</div>
+{props.children} -> PlaceHolder for the content that is inside the component or we can use this inside a wrapper div
+
+But Remember only default HTML tags support 'className', not the custom components
+
+we can dynamically add classes to the custom components
+
+------------------Organizing Component Files---------------------
+
+We can create subfolders in SRC/COMPONENTS folder for components that deals with a particular function and further reduce the complexity of number of files.
+
+EXPENSES subfolder for - Expense Related stuff
+ - all the files related to expense stuff
+
+UI subfolder for - General UI Stuff
+ - CARD
+ .....etc
+
+SECTION 3 - User Interation and State
+- Making Apps Interactive & Reactive
+
+-----How We can Reaect to User Events and How such events can TRIGGER State Change?--------------
+
+Events like (Button Click)
+For all these default events,there is a prop equivalent in React, which we can add to these built-in HTML elements to listen to these events.
+
+So instead of adding a listener as we would normally do it, (By Selecting the element and then adding a event listener to it), Instead in React we Add an Event Listener by going to the JSX element and there we add a special prop which Starts with ->
+onEventName: EX: onClick
+- It Adds an Event Listener for that specific Event, to that prop or attribute we assign a value -> Function();
+
+- This function can be an anonymous function which is wriiten like Ex.2
+- Its a Good Practice to write the function before returning the JSX
+- Just add the refeerence in the OnEvent value, Don't Execute it
+- Remember its necesaary by the elements to support that event which you are adding.
+
+- Name your functions like this in Ex.1, Convention to follow, End with Handler start with name of the event.
+
+Ex1:
+<Button onClick = {clickHandler}></Button>
+
+Ex2: <Button onClick = {() => {console.log("Clicked!!!")}}></Button>
+
+------How Component Function are Executed?------
+
+Problem : If you write a click handler and change a value in that function for a variable which is used by the returned JS and is Passed by the parent of the Current Component -> IT DOES'NT CHANGE!
+
+But, Why? 
+-> Because, REACT does'nt work like this.
+Lets see how React Parses the JSX CODE and how it considers and how it Brings it on the screen.
+
+Component is just a regular function, the only special thing about that function, is that it returns JSX. Now since it's a function, someone has to call it, and major thing to notice that we never called our component function.
+Instead we just use these functions like HTML ELEMENTS in the JSX Code.
+
+Under the hood this is almost (above) like a function call. By using our components in JSX code, We make React aware of our component functions.
+
+Whenever react evaluates this JSX code, it will call these component functions. And these component functions stand to return JSX code, which is all the evaluated, up until there's no more JSX code to be evaluated. So react keeps on calling any component functions it encounters in JSX, then calls any functions that those functions might have returned so any elements those components might have used in their JSX code until there are no more functions left.
+Then it re-evaluates the overall result and translates that into DOM instructions which renders something like this on the screen. That's how react works.
+
+It's all started by the index.js file, Where we initially point at App component, That's the first component function which is being called and that happens when the react app is been loaded on the screen which happens when the page is been visited.
+
+Example:
+REFER REACT-DEV, The Following Components (Expense Tracker) So in the case of expenseItems.js, if react encounters this expense item, it calls this expense item component function, executes all the code in there, encounters this JSX code and calls this card function and the expenseDate function and then it goes through the JSX code of this components until there's no more component code left to call and then translates that into DOM instructions which renders.
+
+Problem with that is, that react never repeats that React goes through all of that when the application is initially rendered, but thereafter it's done.
+
+However in modern applications, of course you sometimes want to update what's visible on the screen, for example because a button was clicked and that button should change some text which is being output.
+
+So we need a way of telling react that something changed and that a certain component should be re-evaluated and that's where react introduces a special concept called state.
+
+-------------State-------------
+By default, Regular variables are not triggering the re-evaluation of the Component
+
+But if it would revaluated then it gets triggered and the regular varaible can be used to change the JSX or component code.
+
+So To Tell REACT that it should run it again, we need to import something from REACT LIBRARY, IMporting a function called as useState().
+
+	// named import in curly braces {}
+ -> import REACT, {useState} from 'react';
+
+useState() -> function provided by the react library and this function allows us to define values as state where changes to these values should reflect in the component function being called again.
+
+ - It is a React Hook, and all these REACT HOOKS can be recognized by the fact that they start with word 'use' in their name.
+
+ - HOOKS must be called inside the component function and they can't be called outside the component function and not in any nested function inside the component function. (1 Exception is there)
+
+
+ - useState wants a default state value, because with useState we basically create a special kind of variable. A variable where changes will lead the component function to be called again. And Of course we can therefore assign an initial value for that special variable (INITIALIZATION) and we pass this initial value as a paramter to useState()
+ 
+ - This useState() returns something, It gives us access to this special variable, however it not just only return that access BUT also it returns a function that we can then call to assign a new value to that variable.
+
+ - useState() actually returns an array, Where the first value is the variable itself, the second value is that updating function, we can call this function to set that variable.
+
+ - we can only do it inside the component function -
+Ex:
+	const ExpenseItem = (props) => {
+       const [title, setTitle] = useState(props.title);
+	
+
+	}
+- title is the value that we can use in JSX CODE
+- New Value is assigned by the setTitle function, pass a new value to this function, and calling this function does'nt only assign a new value to the variable, but its managed by REACT somewhere in memory and we call this state updating function.
+
+- The special variable will not just recieve a new value but the component function in which you called this state updating function will be executed again.
+(That is what we need, we want to call the component function again when our state changes), by calling this state updating function, you're telling REACT that you wanna assign a new value to this state and that then tell REACT that the component in which this state was registered with useState should be re-evaluated. And therefore React will go ahead and execute this component function again.
+
+ - This state updating function actually doesn't change the value right away, but instead schedules this state update. So, its not available rightaway
+
+That's How React State works and this is the keyConcept, 
+If you have data, which might change, and where changes to that data should be reflected on the user interface then you need state because a regular variables will not do the trick with state, however you can set and change values and when they do change, React will re-evaluate the component in which the state was registered and only that component, by the way not any other components, just this component in which this state was registered.
+
+---------Closer Look at useState()-----------
+UseState registers some State, So some value as a state for the component in which it is being called and To be more precise here, It registers it for a specific component instance.
+
+For Example in REACT-DEV, under Expense Tracker project, we have used expenseItem component 3 times. Now every component item recieves its own seperate State which is detached from other states. We have 1 function defination of the component, but we are calling it 3 times and every time it's called, a new separate State is created of course in the same way, but managed independently by React. If the state of one indiviuals changes , others remain intact. So, We have seperate states, even if we create a component more than once. (CRUICAL and GOOD to have). 
+
+If you add a console.log() in a component function itself, this will be called whenever the component function is being executed.
+
+Short Summary of above:
+ - State really is seperated on a per component instance basis
+
+	const [title,setTitle] = useState(props.title)
+
+- By calling useState, we tell react that it should manage some value for us. We never see that variable itself.
+So we therefore just call a function. we don't assign a new value to the variable again.
+How it gets the new VALUE? -> Every time we call the update function, component code executed again with new value for the variable, React will not reinitialize the State. Instead, it will detect that this State had been initialized in the past, and it will just grab the latest State which is based on some State update(we always get a brand new snapshot).
+
+The State adds reactivity to our application, Without state our UI would never change. But with State and with listening to events, we can make sure that we can react to user input and that such input can result in a visible change on our screen.
