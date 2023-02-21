@@ -1,0 +1,4 @@
+https://www.infoworld.com/article/3569369/how-to-use-attribute-routing-in-aspnet-core.html#:~:text=Attribute%20routing%20in%20ASP.NET%20Core%20MVC%20provides%20support%20for,area%2C%20and%20controller%20names%20respectively.
+
+
+https://www.simplilearn.com/tutorials/asp-dot-net-tutorial/data-annotation-attributes-in-asp-dot-net-mvc

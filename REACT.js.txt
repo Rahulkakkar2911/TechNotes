@@ -446,3 +446,65 @@ So we therefore just call a function. we don't assign a new value to the variabl
 How it gets the new VALUE? -> Every time we call the update function, component code executed again with new value for the variable, React will not reinitialize the State. Instead, it will detect that this State had been initialized in the past, and it will just grab the latest State which is based on some State update(we always get a brand new snapshot).
 
 The State adds reactivity to our application, Without state our UI would never change. But with State and with listening to events, we can make sure that we can react to user input and that such input can result in a visible change on our screen.
+
+-----------Working with Multiple States----------------
+	OR   Using useState in 1 component more than once
+
+APPROACH #1:
+You can call useState more than once. You can have multiple States, multiple States slices or State pieces per component, All of these States inside of one and the same component will then also be totally separated from each other.
+
+There is also an alternative and it depends on personal preferences, which approach you Prefer.
+
+APPROACH #2: CASE 1
+You can pass in an object as a value if you need states for dependent component.
+But difference is that you need to update all three of them at once and while updating make sure that no values get lost while updating
+
+ - Both Approaches are fine.
+
+-------Updating States based on the previous states-------
+APPROACH 2: CASE 2
+Whenever this condition arrives, pass a function to the Value Updating Function of the useState variable. This function will automatically be executed by REACT and it will recieve previous state snapshot for that state in which you are calling the updating function. And in that function you should return new state snapshot.
+
+
+	setUserInput((prevState) => {
+            return {
+                ...prevState, 
+                enteredTitle: e.target.value
+            }
+        });
+
+In Many cases APPROACH 2 : BOTH CASES will work fine but the thing that should be kept in mind is that REACT SCHEDULES STATE UPDATES, IT DOES'NT PERFORM IT INSTANTLY. 
+But the difference in both cases of APPROACH 2 is that in CASE 1 it does'nt guarantee that REACT will give you new snapshot ALWAYS, BUT in CASE 2 it guarantees.
+
+SO IN SUMMARY:
+ - Whenever your state update depends on previous state, use function syntax.
+
+----------------CHILD TO PARENT COMMUNICATIONS----------------
+EVENT PROPS: 
+We can create our own EVENT PROPS which expects functions as values and that would allow us to pass a function from a parent component to a child component and then call that function inside of the child component and when we then call a function, we can of course pass data to that function as a parameter and that's how we can communicate up from CHILD TO PARENT.
+
+NOTE: We can't skip components in between or intermediate components from CHILD to PARENT
+
+---------------Lifting State Up------------------
+				<App/>
+				/    \
+			     /      \
+                <Expenses/>  <NewExpense/>
+
+Consider the Tree -> 
+Here the NewExpense generates some data i.e NEW EXPENSE (DATA/STATE is generated in this component), Now it is quite common that you do generate or fetch data in a component but that you might not need that data in that component.
+
+let's say you need the data in Expenses component, So naturally we would like to hand that data over but that doesn't work like this because we have no direct connection between two sibling components.
+
+By Now We can only communicate from PARENT to CHILD and CHILD to PARENT.
+
+The app component in our application has access to both the new expense and the expenses component because it renders both components in its returned JSX code, that's why we wanna utilize that. Because we can now store our state in that closest involved component. So in that parent component which has access to both involved components by lifting our state up. So by passing our generated state data from the new expense to the app component. So by passing our generated state data from the new expense to the app component.
+
+-----Controlled and Uncontrolled Components-------
+
+Controlled Components -> Whenever you use 2 way binding, you are controlling a component
+value and changes are not handled in the components itself, but in the parent component.
+
+Presentational components vs Statefull components,
+stateless versus statefull components or dumb vs smart components
+It simply means that in react app you will have couple of components which manages some state (statefull components), and some components which don't manages some state (stateless components AKA presentational or DUMB component because it doesn't have any internal state it's just there to output some data.)
