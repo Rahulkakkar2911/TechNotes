@@ -508,3 +508,45 @@ value and changes are not handled in the components itself, but in the parent co
 Presentational components vs Statefull components,
 stateless versus statefull components or dumb vs smart components
 It simply means that in react app you will have couple of components which manages some state (statefull components), and some components which don't manages some state (stateless components AKA presentational or DUMB component because it doesn't have any internal state it's just there to output some data.)
+
+-----Section 5 - Rendering Lists and Consitional Content-----
+---------Rendering Lists of Data------------
+
+When we got a bunch of objects into an array full of Component elements (JSX code), because if you do output an array of JSX elements here, like a couple of cards, then React is capable of simply rendering these elements.
+
+an array of JSX elements as part of your JSX code, react would simply render these elements side by side, and that's what we utilize here to transform our array of objects into such an array of JSX ELEMENTS or COMPONENTS, which then are rendered by React.
+
+So, The REACT Renders the Array elements as ->
+
+	[<ExpenseItem/>, <ExpenseItem/>, <ExpenseItem/>]
+
+				=	=
+	<ExpenseItem/>
+	<ExpenseItem/>
+	<ExpenseItem/>
+
+				=	=
+
+	  <ExpenseItem/>  <ExpenseItem/>  <ExpenseItem/>
+
+---------------Understanding Keys!------------------
+
+NOTE: Whenever you get this warning! -> 
+"Each child in a list should have a unique "key" prop."
+
+It is Because React see some items almost similar inside a DIV (which is using some state variable to update the componented, when we add a new item in that DIV BLOCK
+) when we add a new item in that DIV BLOCK
+is that, React renders this new item as the last item in this list of div's and updates all items and replace their content, such that it again matches the order of the items in my Array and this is not great.
+
+This is happening because to React all these items look similar and it only sees that my Array changed that it's now longer than before and hence it simply renders an additional div and it adds that at the end and then it simply walks through all the items and updates the content inside of every item to match the Array content again.
+
+The final result, therefore is correct here but from a performance perspective this is not great because all items are visited and updated and it can even lead to bugs. (statechanges could be lost inside component which was inside that array due to overwritten of the component)
+
+Why REACT behave like this? -> Because it has no other way  
+
+It currently simply checks the length of the Array and then has a look at the number of items that were already rendered. The individual items all look similar to React though so it can't know where a new item should be added. That's why we get this warning
+
+//IMPORTANT !
+We have a way of telling react where a new item it should be added and we do that by going to the place where we output our list of items. We add a special PROP to that item there (Key), it will help REACT to identify indiviual items (key should be a unique ID) (You can also use, index item (available in MAP as second argument) for special key) 
+
+You can use useState hook to update the component once we add a new item to that list.
