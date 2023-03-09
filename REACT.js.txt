@@ -745,3 +745,743 @@ After downloading you will get 2 tabs in Chrome Devtools:
 		- We can also see hooks attached to a component, change the hooks (particulary state hook)
 
 	- Profiler
+
+
+
+------Section 9: Working with Fragments, Refs etc.---------
+			------JSX LIMITATION-------
+If we have adjacent root level JSX elements like in this example:
+	return (
+		<h2>Hi there!</h2>
+		<p>This Does not work :-(</p>
+	)
+we'll get an error.
+
+In REACT, You can't return more than one "root" JSX element (you also can't store more than one "root" JSX element in a variable).
+
+Reason for this is: 
+	return (
+		React.createElement('h2', {}, 'Hi there!')
+		React.createElement('p', {}, 'This does not work :-( ')
+	
+	);
+
+You can't return more than 1 statements 
+
+1 Workaround for it is:
+	-> To simply wrap around the adjascent elements with a element.
+	-> You have only 1 value to return 
+	-> this could lead to a Problem named: "<div> Soup"
+		
+		<div>
+		  <div>
+		    <div>
+                  <div>
+			  <h2> Hello </h2>
+			</div>
+		    </div>
+		  </div>
+		</div>
+	-> In bigger apps, you can easily end up with tons of unnecessary <div>s (or other elements) which could add no semantic meaning or structure to the page but are only there because of React's/ JSX' Requirement.
+	-> Application can be slower
+
+Alternative for it is:
+	-> You can simply use a native JS array, you can put the adjacent elements seperated by commas
+	-> We can return an array because React is able to work with arrays of JSX elements.
+	-> You will get a warning because whenever you're working with an array of JSX elements, React wants a key on every element and with no exception here
+
+Solution:
+	We can use a "Wrapper Component"
+		inside of it just return props.children
+	->It is a Empty Component!
+It's an element which won't render anything to the dom, but the requirement is met that there must be one root component
+
+✅It's a good practice to create these types of components under Helpers Folder/Directory
+
+Example: 
+	
+	const Wrapper = props => {
+		return props.children
+	}
+
+	export default Wrapper;
+
+
+-----React Fragments-----
+
+✅import React, {Fragment} from 'react';
+
+return (
+	<React.Fragment>
+	   <h2>Hi!</h2>
+	   <p>This does'nt works</p>
+	</React.Fragment>
+)
+
+	OR
+
+return (
+	<>
+	  <h2>Hi!</h2>
+	  <p>This does'nt works</p>
+	</>
+)
+
+Its an empty wrapper component: It doesn't render any real HTML element to the DOM. But it fulfills React's/JSX' Requirement.
+
+
+----React Portals----
+Portals provide a first-class way to render children into a DOM node that exists outside the DOM hierarchy of the parent component.
+Like Modals, Which needs to be direct child of the body or root element
+
+✅For this, You create a Portal for the elements inside PUBLIC -> index.html -> Body ke niche 
+	<div id = "backdrop-root"></div>
+	<div id = "overlay-root"></div>
+	<div id = "root"></div>
+
+In the modal file, 
+Create -> 
+	before the Modal component function,
+
+const Backdrop = props => {
+	return (div which has backdrop class)
+     EX: <div className = {classes.backdrop} onClick = {props.onConfirm}></div>
+}
+
+const ModalOverlay = props => {
+	return (div which modal class)
+	(Card of the Modal with its children, text button etc.)
+}
+
+On the main component add an expression  in which we need to add something.
+
+ import ReactDOM from 'react-dom';
+
+return (
+	<>
+		// This line ports the element (first argument) to the container element which is the second argument of the createPortal function.
+
+	  {ReactDOM.createPortal(React node that should be render in JSX ,  pointer to that container where this previous node shoud be render we need to select that element by DOM API (document.getelement......))}
+	</>
+)
+
+
+In JSX it should remain there where you want to render (in that particular component) but in reality it will ported to where it is mentioned (second argument) 
+
+------------------------------Ref's (References)-----------------------------------
+
+Refs provide a way to access DOM nodes or React elements created in the render method.
+In the typical React dataflow, props are the only way that parent components interact with their children. To modify a child, you re-render it with new props. However, there are a few cases where you need to imperatively modify a child outside of the typical dataflow. The child to be modified could be an instance of a React component, or it could be a DOM element. For both of these cases, React provides an escape hatch.
+
+✅There are a few good use cases for refs:
+
+ - Managing focus, text selection, or media playback.
+ - Triggering imperative animations.
+ - Integrating with third-party DOM libraries.
+
+Avoid using refs for anything that can be done declaratively.
+
+For example, instead of exposing open() and close() methods on a Dialog component, pass an isOpen prop to it.
+
+⚠️Don’t Overuse Refs
+Your first inclination may be to use refs to “make things happen” in your app. If this is the case, take a moment and think more critically about where state should be owned in the component hierarchy. Often, it becomes clear that the proper place to “own” that state is at a higher level in the hierarchy. See the Lifting State Up guide for examples of this.
+
+
+
+
+✅To Create a Ref we need to import a hook ->
+
+⚠️Only usable inside of functional components
+	import React, {useRef} from 'react';
+
+It takes a default value you wanna initialize it to (by default undefined).
+	const variable_name = useRef();
+
+✅You can connect this ref to any Component or any HTML element by adding a "prop" to that element named "ref"
+(just like "key" prop), However it is very often done for Input elements.
+
+✅Now to that ref prop pass that variable_name which you earlier created
+
+Example:
+	const nameInputRef = useRef();
+
+	return (
+		<input ref = {nameInputRef}>
+	)
+
+ -> It returns a
+
+--------Working of Ref--------
+
+And now a connection will be established. The first time React reaches this code and renders this code, it will actually set the values stored in nameInputRef to the native DOM element that is rendered based on this input.
+
+This ref value, which is being generated here always is an object, which always has a current prop and the current prop holds the actual value that ref is connected with Now, by default, it's undefined but as soon as this code ran, because of this ref prop, the nameInputRef is connected to that input and hence, it's actually the input which is being stored as a value in the current prop and what's being stored here really is the actual DOM node. So not some theoretical value or anything like that but the real DOM node,
+
+Now, it is recommended that you don't manipulate it. Your DOM should really only be manipulated by React. But reading data from the input doesn't sound too bad because you're not changing anything with that.
+ 
+
+❓Which is Better Ref's or State?
+
+The question is whether refs or state is better. You can use either of the two. You will sometimes have use cases where you just want to quickly read a value, for example.
+
+And if you only want to read a value and you never plan on changing anything, well, then you don't really need state because just to use state as a keylogger is not that great, It's a lot of unnecessary code and work. So if you just want to read a value, refs are probably better. In scenarios like this, it's up to you what you prefer. Refs, which are a little bit less code but you have this edge case of manipulating the DOM, or a state, which is definitely cleaner but is a bit more code.
+
+--------Controlled Vs Uncontrolled Components--------
+
+✅Uncontrolled Components: Uncontrolled Components are the components that are not controlled by the React state and are handled by the DOM (Document Object Model). So in order to access any value that has been entered we take the help of refs.
+
+For instance, if we want to add a file as an input, this cannot be controlled as this depends on the browser so this is an example of an uncontrolled input.
+
+ - Components are under the control of DOM.
+ - Are Uncontrolled because during the life cycle methods the data may loss
+ - Internal state is maintained
+ - We access the values using refs
+ - Controlled by the DOM itself
+ - Has very limited control over form values and data
+
+✅Controlled Components: In React, Controlled Components are those in which form’s data is handled by the component’s state. It takes its current value through props and makes changes through callbacks like onClick, onChange, etc. A parent component manages its own state and passes the new values as props to the controlled component.
+
+Example: We are creating a simple form that comprises an input field with a label name and a submit button. We are creating an onSubmit function that triggers when we submit the form which shows the name that we have filled in the alert box.
+
+ - The component is under control of the component’s state
+ - These components are predictable as are controlled by the state of the component
+ - Internal state is not maintained
+ - It accepts the current value as props
+ - Controlled by the parent component
+ - Have better control on the form data and values
+
+--------------Section 10: Advanced: Handling side effects, Using Reducers and Context----------------
+
+--------What is an "Effect" Or a "Side Effect"---------
+
+React library itself has one main job, 
+
+ - to render the UI,
+
+ - to React to our user input,
+ 
+ - Evaluate & Render JSX
+ 
+ - Manage State & Props
+ 
+ - React to (User) Events & Input
+
+ - Re-evaluate Component upon State and Prop Changes 
+
+Side effects are everything else that might be happening in your application and a good example here is sending a Http request or storing something in browser storage. In local storage for example. But you could also think about timers or intervals which you set in your code.
+
+These are all tasks which you of course often have to consider in your application but these tasks are all not related to bringing something onto the screen, at least not directly.
+
+These are therefore tasks which must happen outside of the normal component evaluation and render cycle - especially since they might block/delay rendering (e.g Http Requests).
+
+You would even create an infinite loop Because you would send the request whenever the Component function re-runs and in response to the request you change some state which triggers this function again. So therefore such side effects should not go directly into this component function because that would most likely create bugs, infinite loops or simply send too many Http requests to stick with that example.
+
+Therefore we'll have a better tool for handling side effects and that's a special React Hook which we can use. (The useEffect Hook)
+
+---------The useEffect() Hook---------
+
+	useEffect(() => { .. }, [ dependencies ]);
+
+The useEffect() Hook is simply another built in Hook which you can write inside the component function.
+
+1️⃣ Argument : A function that should be executed AFTER every component evalutaion if the specified dependencies changed.
+In this function, we can perform our side effects or multiple side effects if we want. The function passed to useEffect is a callback function. This will be called after the component renders.
+
+In this function, we can return a function called as CLEANUP Function, This will run as a cleanup process before useEffect Executes the callback function next time and before the component is removed and it does'nt run before the first side effect function execution.
+	We can use this cleanup Function to write cleanup logic like timer cleanup,....etc
+
+
+
+2️⃣ Argument : Dependencies of this effect - the function only runs if the dependencies changed (array full of dependencies) 
+
+
+The correct way to perform the side effect in our User component is as follows:
+
+ - We import useEffect from "react"
+ - We call it above the returned JSX in our component
+ - We pass it two arguments: a function and an array
+
+IMPORTANT! :⚠️ 
+If you do not provide the dependencies array at all and only provide a function to useEffect, it will run after every render.
+
+If you forget to provide your dependencies correctly and you are setting a piece of local state when the state is updated, the default behavior of React is to re-render the component. And therefore, since useEffect runs after every single render without the dependencies array, we will have an infinite loop.
+
+
+useEffect, is a super important hook that helps you deal with code that should be executed in response to something and something could be the component being loaded. It could be the email address being updated. It could be anything, whenever you have an action that should be executed in response to some other action, that is a side effect and that is where a useEffect is able to help you.
+
+❌What You Don't Need to Add in useEffect callback Function?
+
+❌You DON'T need to add state updating functions (as we did in the last lecture with setFormIsValid): React guarantees that those functions never change, hence you don't need to add them as dependencies (you could though)
+
+❌You also DON'T need to add "built-in" APIs or functions like fetch(), localStorage etc (functions and features built-into the browser and hence available globally): These browser APIs / global functions are not related to the React component render cycle and they also never change
+
+❌You also DON'T need to add variables or functions you might've defined OUTSIDE of your components (e.g. if you create a new helper function in a separate file): Such functions or variables also are not created inside of a component function and hence changing them won't affect your components (components won't be re-evaluated if such variables or functions change and vice-versa)
+
+✅So long story short: You must add all "things" you use in your effect function if those "things" could change because your component (or some parent component) re-rendered. That's why variables or state defined in component functions, props or functions defined in component functions have to be added as dependencies!
+
+🧱 More About it
+ -> https://www.freecodecamp.org/news/react-useeffect-absolute-beginners
+
+ ✅Object properties can be used as dependencies To useEffect.
+
+const { someProperty } = someObject;
+useEffect(() => {
+  // code that only uses someProperty ...
+}, [someProperty]);
+
+This is a very common pattern and approach
+
+We could also write this code and it would work in the same way.
+
+useEffect(() => {
+  // code that only uses someProperty ...
+}, [someObject.someProperty]);
+
+
+---------Debouncing----------
+Debouncing is a programming practice used to ensure that time-consuming tasks do not fire so often, that it stalls the performance of the web page. In other words, it limits the rate at which a function gets invoked.
+
+Debouncing in JavaScript is a practice used to improve browser performance. There might be some functionality in a web page that requires time-consuming computations. If such a method is invoked frequently, it might greatly affect the performance of the browser, as JavaScript is a single-threaded language. 
+
+Example: 
+    var button = document.getElementById("debounce");
+    const debounce = (func, delay) => {
+        let debounceTimer
+        return function() {
+            const context = this
+            const args = arguments
+                clearTimeout(debounceTimer)
+                    debounceTimer
+                = setTimeout(() => func.apply(context, args), delay)
+        }
+    }
+    button.addEventListener('click', debounce(function() {
+            alert("Hello\nNo matter how many times you" +
+                "click the debounce button, I get " +
+                "executed once every 3 seconds!!")
+                            }, 3000));
+
+Explanation: The button is attached to an event listener that calls the debounce function. The debounce function is provided with 2 parameters – a function and a Number. Declared a variable debounceTimer, which as the name suggests, is used to actually call the function, received as a parameter after an interval of ‘delay’ milliseconds. 
+
+If the debounce button is clicked only once, the debounce function gets called after the delay. However, if the debounce button is clicked once, and again clicked prior to the end of the delay, the initial delay is cleared and a fresh delay timer is started. The clearTimeout function is being used to achieve it. 
+
+The general idea for debouncing is: 
+
+ - Start with 0 timeout 
+ - If the debounced function is called again, reset the timer to the specified delay 
+ - In case of timeout, call the debounced function Thus every call to a debounce function, resets the timer and delays the call. 
+
+Application: Debouncing can be applied in implementing suggestive text, where we wait for the user to stop typing for a few seconds before suggesting the text. thus, on every keystroke, we wait for some seconds before giving out suggestions. Another application of debouncing is in content-loading webpages like Facebook and Twitter where the user keeps on scrolling. In these scenarios, if the scroll event is fired too frequently, there might be a performance impact, as it contains lots of videos and images. Thus the scroll event must make use of debouncing.
+
+🤐User Typing : 
+Well, the trick is that we actually save the timer and for the next keystroke, we clear it so that we only have one ongoing timer at a time and only the last timer will, therefore, complete and as long as the user keeps on typing, we always clear all other timers and therefore, we only have one timer that completes, and that completes after 500 milliseconds, which is the delay the user has to issue a new keystroke to clear this timer.
+
+-------------useReducer--------------
+
+Sometimes, you have more complex state - ForExample if it got miltiple states, multiple ways of changing it or dependencies to other states.
+
+In such cases useState() then often becomes hard ot error-prone to use - it's easy to write inefficient or buggy code in such scenarios.
+ 
+useReducer can be used as a replacement for useState() if you need "More Powerfull state management"
+
+
+The useReducer Hook is the better alternative to the useState hook and is generally more preferred over the useState hook when you have complex state-building logic or when the next state value depends upon its previous value or when the components are needed to be optimized.
+
+The useReducer hook takes three arguments including reducer, initial state, and the function to load the initial state lazily.
+
+const [state, dispatchFn] = useReducer(reducerFn, initialArgs, initFn);
+
+1️⃣ -state: The state snapshot used in the component re-render/re-evaluation cycle
+2️⃣ -dispatchFn: A function that can be used to dispatch a new action (i.e Trigger an update of the state)
+
+3️⃣ - reducerFn is the user-defined function that pairs the current state with the dispatch method to handle the state. A function that is triggered automatically once an action is dispatched (via dispatchFn)
+
+4️⃣ - initialState refers to the initial arguments
+5️⃣ - initFn is the function to initialize the state lazily or programmatically.
+
+✅To use it, we need to import it first:
+   import React, {useReducer} from 'react';
+
+🔁 Re-watch 117: useReducer & useEffect
+
+
+
+-----------------------------------------
+🤐 useState VS useReducer
+🧱 -> useState()
+	- The main state management "tool"
+	- Great for independent pieces of state/data
+	- Great if state updates are easy and limited to a few kinds of updates
+🧱 -> useReducer()
+    - Great if you need "More Power"
+	- should be considered if you have related pieces of state/data.
+	- Can be helpful if you have more complex state updates
+
+------React Context (CONTEXT API)-------
+React context allows us to pass down and use (consume) data in whatever component we need in our React app without using props.
+
+In other words, React context allows us to share data (state) across our components more easily.
+
+When should you use React context?
+React context is great when you are passing data that can be used in any component in your application.
+
+✅These types of data include:
+
+ - Theme data (like dark or light mode)
+ - User data (the currently authenticated user)
+ - Location-specific data (like user language or locale)
+
+ Data should be placed on React context that does not need to be updated often
+
+❓What problems does React context solve?
+React context helps us avoid the problem of props drilling.
+
+Props drilling is a term to describe when you pass props down multiple levels to a nested component, through components that don't need it.
+
+To establish it:
+1️⃣ Create a directory named "Context" or "Store" in the "src" Directory Next to components.
+
+2️⃣ Add a component specific context javascript file in that folder, Example:
+ -> For authentication
+		-> add auth-context.js
+ 
+3️⃣ In that file include React:
+	-> import React from 'react';
+
+4️⃣ write this line:
+
+	//Context -> App or Component wide State
+		React.createContext(parameter);
+	//parameter -> often it is an object
+
+    //It will return a component or an object
+    const AuthContext = React.createContext({
+		isLoggedIn : false
+	});
+5️⃣ Export this object
+    export default AuthContext;
+
+IMPORTANT! : ⚠️
+The created context is an object with two properties: Provider and Consumer, both of which are components. To pass our value down to every component in our App, we wrap our Provider component around it.
+
+🔁There are four steps to using React context:
+
+ - Create context using the createContext method.
+ - Take your created context and wrap the context provider around your component tree.
+ - Put any value you like on your context provider using the value prop.
+ - Read that value within any component by using the context consumer.
+
+ 🤐 Read More About:
+	https://www.freecodecamp.org/news/react-context-for-beginners/
+
+For the second part, that is the listening part (to get access to our value), and we can listen in two ways.
+
+1️⃣ - by using Context consumer
+2️⃣ - by using a React Hook. (Mostly Used!)
+
+1️⃣ By first way we need to wrap the component where we want to use the Context Value:
+
+wherever we want to consume (or use) what was provided on our context, we use the consumer component Context.Consumer, To use our passed down value, we use what is called the "render props pattern". It is just a function that the consumer component gives us as a prop. And in the return of that function, we can return and use value.
+
+<Context.Consumer>
+ ... Here we write a function to which we got argument which has the context data (object which we created in beginning).
+	{(ctx) => {
+		here .. we return the JSX code which have access to that data.
+	}}
+</Context.Consumer>
+
+IMPORTANT! : ⚠️
+Technically, we don't need a Provider if we are providing a default value to the context 
+
+We need to pass a prop on Context.Provider named exactly as "value" on which we provide the default values
+
+We can pass anything from functions to values,.... strings etc.
+
+----------useContext Hook------------
+
+1️⃣ Import it:
+	import React , {useContext} from 'react';
+
+2️⃣ Call it in the react component function where you want to use it: PassIt the context which you want to use
+
+	const ctx = useContext(AuthContext);
+
+👍 You can also create your own custom Provider Component as following in the context file:
+
+	const AuthContext = React.createContext({
+		isLoggedIn : false,
+		onLogout: ()  => {},
+		onLogin: () => {}
+	});
+	//custom Provider Function
+	const AuthContextProvider = (props) => {
+		//Can be used to bind entire logic
+		const [isLoggedIn, setIsLoggedIn] = useState(false);
+		
+		
+		useEffect(() => {
+			const storedUserLoggedInInformation = localStorage.getItem('isLoggedIn');
+			if(storedUserLoggedInInformation === '1'){
+				setIsLoggedIn(true);
+			}
+		}, [])
+
+		const logoutHandler = () => {
+			localStorage.removeItem('isLoggedIn')
+			setIsLoggedIn(false);
+		}
+
+		const loginHandler = () => {
+			localStorage.setItem('isLoggedIn', '1')
+			setIsLoggedIn(true);
+		}
+		
+		return <AuthContext.Provider>props.children</AuthContext.Provider>
+	}
+
+
+Now you can use this AuthContextProvider component and wrap it over your App Component
+
+--------Context Limitation-------
+⚠️React Context is NOT optimised for high frequency changes!
+ -> For example, if you have state changes every second or multiple times per second. 
+ -> For that we will utilize something known as Redux
+
+⚠️React Context also should'nt be used to replace ALL component communications and props.
+
+ -> Component should still be configurable via props and short 'prop chains' might not need any replacement.
+
+ ----------------Rules of Hooks------------------
+
+ 1️⃣ Only Call React Hooks in React Functions, and in Custom Hooks.
+
+ 2️⃣ Only call React Hooks at the TOP LEVEL
+	 - Don't call them in Nested Functions
+	 - Don't call them in any Block statements
+ 3️⃣ Unofficial Rule for useEffect(): Always add everything you refer to inside of useEffect() as a dependency!
+ 
+----useImperativeHandle Hook-----
+Forward Ref's
+
+
+------------React:BTS-------------
+
+😵‍💫How does REACT Works? 
+React -> "A Javascript library for building UI's"
+
+ReactDOM -> Interface to the WEB
+React JS does not know the web, it doesnt know anything about the browser, It only knows how to work with components.
+It is ReactDOM which ultimately neeeds to bring real HTML elements to the screen.
+
+React Only cares about the components (RealDOM - what user see), props (Data from parent component), state (internal data), context (component wide data).
+
+whenever props, state or context changes, components that use these concepts are updated by React and React checks whether this component now wants to draw something new onto the screen and if that should be the case, React will let ReactDOM know about that so that ReactDOM is able to bring that new screen.
+
+❓How Exactly Does all that work?
+React is concerned about components and what React in the end does is, it uses a concept called the virtual DOM. It determines how the component tree, which your app is building in the end, and every component itself, of course, has a sub tree, that JSX code returned by that component.
+It determines how that component tree currently looks like and what it should look like, for example, after a state update and that information is then handed off to ReactDOM which now knows about the differences and which then knows how it should manipulate the real DOM to match that virtual DOM (that virtual snapshot React derived)
+
+whenever state props, or a context of a component changes, that component function is re-executed, that component is re-evaluated by React.
+
+IMPORTANT! : ⚠️
+Re-evaluating a component is not same as re-rendering the DOM. So just because a component function is re-executed by React does not mean that the respective part of the actual real DOM is re-rendered or re-evaluated. Instead we have to differentiate between our component part, our React part and the real DOM.
+
+Now the real DOM on the other hand is only updated in the places where it needs to be changed based on that difference React derived between the previous state of a component and its tree and the current state after the state prop or context change.
+
+So the real DOM is not changed all the time. It's changed rarely and only when needed. And that's important for performance. Because making a virtual comparison between the previous state and the current state, that's fairly cheap and easy to do and that happens only in memory. Reaching out to the real DOM, (that's rendered in the browser)
+is pretty expensive from a performance perspective, because working with the real DOM just turns out to be a performance intensive task. 
+Ofcourse not a tiny change in one place, but if you do that tiny change in a lot of places all the time, then your page might become slow because you're working with the real DOM too much.
+And that's why React has this structure of doing virtual comparisons with that virtual DOM  and then only passing the changes between your last snapshot and the current snapshot to the real DOM.
+
+That's how React works.
+
+🤐Virtual DOM diffing
+Finding out the difference between two snapshots.
+
+Example: 
+	🫣Previous Evaluation Result:
+
+	<div>
+	  <h1>Hi there!</h1>
+	</div>
+
+all of a sudden we want to show a new paragraph
+	🫣Current Evaluation Result:
+	
+	<div>
+	  <h1>Hi there!</h1>
+	  🔁<p>This is new!</p>
+	</div>
+
+In this case, React would determine that the difference between both snapshots is this p tag and it would report does change to ReactDOM 
+so that ReactDOM can update the real DOM and insert this paragraph. ReactDOM would not re-render the entire DOM. It would not touch this existing h1 or div element. It would only insert the paragraph after the h1 element inside of the div.
+
+IMPORTANT! : ⚠️
+-> All  JSX elements in the end are like function calls to the respect of component functions.
+If the parent component function runs again of course the child component functions also runs again. So in the end, the prop value doesn't even matter here for this component to be executed again.
+
+-> if a component is re-executed all its child components will also be re-executed and re-evaluated.
+
+🫣🤐❓isn't this bad?
+Well, this certainly costs some performance. Of course, we got ongoing function executions. We got a virtual comparison. It's needless to say that React is highly optimized for those executions and comparisons.
+
+But we can as a developer can tell React that it should only re-execute a component under certain circumstances and those circumstances would be that the props, which the component received, changed!
+
+React.memo(); -> it can help here
+wrap the component function returned value to it, can be done while exporting it:
+
+This only works for functional components and not for class based components.
+
+Components in React are designed to re-render whenever the state or props value changes. However, this can impact your application's performance because, even if the change is only intended to affect the parent component, every other child component attached to the parent component will re-render. When a parent component re-renders, so do all of its child components.
+
+React Memo is a higher-order component that wraps around a component to memoize the rendered output and avoid unnecessary renderings. This improves performance because it memoizes the result and skips rendering to reuse the last rendered result.
+
+There are two ways you can wrap your component with React.memo(). It is either you wrap the actual component directly without having to create a new variable to store the memoized component:
+
+	const myComponent = React.memo((props) => {
+    	/* render using props */
+	});
+
+	export default myComponent;
+
+if the parent component changed but the prop values for that component here did not change, component execution will be skipped.
+
+Another option is to create a new variable to store the memoized component and then export the new variable:
+
+	const myComponent = (props) => {
+    	/* render using props */
+	};
+
+	export const MemoizedComponent = React.memo(myComponent);	
+
+myComponent outputs the same content as MemoizedComponent, but the difference between both is that MemoizedComponent render is memoized. This means that this component will only re-render when the props change.
+
+IMPORTANT! : ⚠️
+A memoized component will only re-render when there is a change in props value or when the state and context of the component change.
+
+🫣When to use React.memo()❓
+
+You now know what it means to memoize a component and the advantages of optimization. But this doesn’t mean you should memoize all your components to ensure maximum performance optimization of performance 🙃.
+
+It is important to know when and where to memoize your component else it would not fulfill its purpose. For example, React Memo is used to avoid unnecessary re-renders when there is no change to the state or context of your component. If the state and content of your component will ALWAYS change, React Memo becomes useless. Here are other points:
+
+ - Use React Memo if your component will render quite often.
+ - Use it when your component often renders with the same props. This happens to child components who are forced to re-render with the same props whenever the parent component renders.
+ - Use it in pure functional components alone. If you are using a class component, use the React.PureComponent.
+ - Use it if your component is big enough (contains a decent amount of UI elements) to have props equality check.
+
+IMPORTANT:
+In below Example:
+The memoized Profile component will always render even when the user object does not change:
+
+	<!-- Profile.js -->
+	import React from 'react';
+
+	const Profile = React.memo(({ userDetails }) => {
+		console.log('profile rendered');
+		return (
+			<div>
+				<p>{userDetails.name}</p>
+				<p>{userDetails.age}</p>
+				<p>{userDetails.userName}</p>
+			</div>
+		);
+	});
+	export default Profile;
+
+React Memo doesn't work because it only performs a shallow comparison of the component's properties. Every time the app is updated, the user variable is re-declared, which happens when you use objects. To fix this, use the second argument and provide a custom comparison function.
+
+	<!-- Profile.js -->
+	import React from 'react';
+
+	const Profile = React.memo(({ userDetails }) => {
+			console.log('profile rendered');
+			return (
+				<div>
+					<p>{userDetails.name}</p>
+					<p>{userDetails.age}</p>
+					<p>{userDetails.userName}</p>
+				</div>
+			);
+		},(prevProps, nextProps) => {
+			if (prevProps.userDetails.name === nextProps.userDetails.name) {
+				return true; // props are equal
+			}
+			return false; // props are not equal -> update the component
+		}
+	);
+	export default Profile;
+
+❌When to AVOID using REACT MEMO?
+
+You now understand how to use React Memo, but it is important to note that you should not use it in all situations because it does not always work as expected. Performance-related changes that are implemented incorrectly can even harm performance.
+
+When you need to remember the values of a function or an object, you can use hooks like useMemo() and useCallback(). Also, avoid using React Memo if the component is light and renders with multiple props.
+
+Finally, never use React Memo to wrap a class-based component; instead, extend PureComponent or implement the shouldComponentUpdate() method.
+
+-----------useCallback() Hook-----------
+useCallback is a React Hook that lets you cache/save/store a function definition between re-renders.
+
+	const cachedFn = useCallback(fn, dependencies)
+
+Call useCallback at the top level of your component to cache a function definition between re-renders:
+
+fn: The function value that you want to cache. It can take any arguments and return any values. React will return (not call!) your function back to you during the initial render. On subsequent renders, React will give you the same function again if the dependencies have not changed since the last render. Otherwise, it will give you the function that you have passed during the current render, and store it in case it can be reused later. React will not call your function. The function is returned to you so you can decide when and whether to call it.
+
+Dependencies: The list of all reactive values referenced inside of the fn code. Reactive values include props, state, and all the variables and functions declared directly inside your component body.The list of dependencies must have a constant number of items and be written inline like [dep1, dep2, dep3]. React will compare each dependency with its previous value using the Object.is comparison algorithm.
+
+IMPORTANT! : ⚠️
+A component might get removed, and in that case, if it's then later reattached, a new state would be initialized. But as long as a component stays attached to the DOM, state is only updated after that first initialization.
+ - same is true for useReducer
+
+State Updates and State Scheduling:
+
+Calling state updating functions in general schedules a state update. React is aware of it, React plans on processing it,
+React doesn't process that immediately though. 
+
+Now in reality most of the time, state changes, scheduled state changes will be processed very fast, pretty much instantly. But React reserves the right of actually postponing that state change. React might postpone scheduled state changes.
+
+Now, what React does is, it guarantees you that the order of state changes for one in the same type of state is guaranteed. once that state change was processed, React will re-evaluate the component, it will re-run the component function.
+
+Because of that scheduling where of course you might have multiple outstanding scheduled state changes at the same time, because of that, multiple updates can be scheduled at the same time, because of that, it is recommended that you use this function form for updating your state if you depend on the previous state snapshot. but because it theoretically could be postponed, this is the safe way of ensuring that state changes are processed in order and for every state change where you depend on the previous state,
+
+That's why this function form is helpful because there React will actually ensure that for every outstanding state change, it looks into the latest state and gives you that and does not use the latest state from the last time the component was re-rendered. That's an important difference between when the component was re-rendered and when a state change was scheduled.
+
+
+---------Batching---------
+
+if you have two state updates in the same synchronous code snippet after each other (in the same function), for example, where nothing in between would cause a time delay or anything like that. In such cases, React will batch those state updates together.
+
+For Exapmle:
+In one long synchronous process, so for example, in one function that executes start to end without any callbacks or promises in between, in such cases React will take all the state updates that are produced by that function and it will batch them together into one state update.
+
+----------------useMemo() Hook-------------------
+
+useMemo is a React Hook that lets you cache the result of a calculation between re-renders.
+
+   const cachedValue = useMemo(calculateValue, dependencies)
+
+Call useMemo at the top level of your component to cache a calculation between re-renders.
+
+1️⃣calculateValue: The function calculating the value that you want to cache. It should be pure, should take no arguments, and should return a value of any type. React will call your function during the initial render. On subsequent renders, React will return the same value again if the dependencies have not changed since the last render. Otherwise, it will call calculateValue, return its result, and store it in case it can be reused later.
+
+2️⃣dependencies: The list of all reactive values referenced inside of the calculateValue code. Reactive values include props, state, and all the variables and functions declared directly inside your component body. The list of dependencies must have a constant number of items and be written inline like [dep1, dep2, dep3]. React will compare each dependency with its previous value using the Object.is comparison algorithm.
+
+On the initial render, useMemo returns the result of calling calculateValue with no arguments.
+
+During subsequent renders, it will either return an already stored value from the last render (if the dependencies haven’t changed), or call calculateValue again, and return the result that calculateValue has returned.
+
+IMPORTANT! : ⚠️
+✅useMemo is a Hook, so you can only call it at the top level of your component or your own Hooks. You can’t call it inside loops or conditions. If you need that, extract a new component and move the state into it.
+
+✅In Strict Mode, React will call your calculation function twice in order to help you find accidental impurities. This is development-only behavior and does not affect production. If your calculation function is pure (as it should be), this should not affect the logic of your component. The result from one of the calls will be ignored.
+
+✅React will not throw away the cached value unless there is a specific reason to do that. For example, in development, React throws away the cache when you edit the file of your component. Both in development and in production, React will throw away the cache if your component suspends during the initial mount. In the future, React may add more features that take advantage of throwing away the cache—for example, if React adds built-in support for virtualized lists in the future, it would make sense to throw away the cache for items that scroll out of the virtualized table viewport. This should match your expectations if you rely on useMemo solely as a performance optimization. Otherwise, a state variable or a ref may be more appropriate.
+
+-----------------Section 13: An Alternative Way of Building Componenets: Class Based Components------------------
+
+            🔁SKIP THIS SECTION UNTILL COURSE FINISHES
+
+-----------------Section 14: Sending Http Requests (e.g. connecting to the database)------------------
+
