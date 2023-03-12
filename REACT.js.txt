@@ -1484,4 +1484,539 @@ IMPORTANT! : ⚠️
             🔁SKIP THIS SECTION UNTILL COURSE FINISHES
 
 -----------------Section 14: Sending Http Requests (e.g. connecting to the database)------------------
+AXIOS (a package for javascript) could be used to send http requests 
+Fetch API : BUILT into Browsers, allows to send and fetch some data to/from the API
+
+✅If we are fetching a resource from an API and we got an unsuccessful status code. By default, the Fetch API doesn't throw back an error. Axios, on the other hand, would generate and throw a real error for error status codes.
+
+✅You can use States for various states like Loading, error, loadedResource etc.....
+
+✅useEffect can be used to do side works like fetching data immediately after the component loads side by side preventing infinite loop; 
+
+----------------Section 15: Building Custom React Hooks-------------------
+
+Custom React JS hooks are reusable functions that a React JS software developer can use to add special and unique functionality to the React applications. Usually, if there is a requirement to add a feature, one can install a third-party library and solve the problem. But what if there is no such library with hooks that can be used? This problem is solved by using custom React JS hooks.
+
+A custom hook is a special JavaScript function whose name starts with ‘use’ and can be used to call other hooks. Let’s take a look at some major differences between a custom React JS hook and React JS components:
+
+ - A custom hook does not require a specific signature.
+ - A software developer can choose what argument the custom hook has and what should the argument return.
+ - A custom hook always starts with the name ‘use’.
+
+ ✅ Outsource stateful logic into re-usable functions.
+ unlike "regular functions", custom hooks can use other react hooks and react state.
+ 
+ ⭐ How can we create a custom Hook?
+1️⃣ like components, we create a seperate directory for our custom "Hooks"
+
+2️⃣ Create a file, by naming like use-< useForTheHook >.js
+Example:
+	🫣use-counter.js
+
+
+
+
+
+
+
+
+
+✅If you call a custom hook in one of your components and that component, for example of registers a state or an effect, then this state and effect will be tied to the component in which you use your custom hook.
+
+✅If we use a custom hook in multiple components, every component will receive its own state.
+
+You can return whatever you wanna return in your custom hooks. Could be an array or an object or a number or a state variable.
+
+---------------------------------------Section 18: Diving deep into REDUX--------------------------------------------
+
+⭐Redux is a third party react library.
+
+✅Redux is a state management system for a cross-component or app-wide state. So it helps us manage state (data that changes and affects our application) and what we display on the screen.
+
+✅It helps us manage such data across multiple components or even the complete app.
+
+❓What is Cross-Component/App-Wide state
+
+So, There are three main kinds of state.
+1️⃣ Local state
+ -> It is a state which belongs to a single component 
+ -> For example, if we listen to a user input and we use useState to store that input with every keystroke in a state variable.
+               Or 
+We have a button that toggles some detailed field. So if we click that button we show the details, if we click it again we hide them.
+It should be managed component-internal with useState() / useReducer().
+
+
+2️⃣ Cross-Component
+-> It is a state that affects multiple components
+-> For example, if we have a button that opens or closes a modal overlay such a modal component might affect multiple components and the trigger for opening the modal is per definition not inside of the modal. On the otherhand, the modal might be closed by clicking a button which is inside of that modal.
+
+So, then we have multiple components working together to display and hide a modal.
+
+-> Require "prop chains" / "prop drilling"
+3️⃣ App-Wide State
+-> Is is a state that does not just affect multiple components but basically all components of an application.
+-> For example: user authentication, If we log in we might need to change the navigation bar because we now show new options and we also certainly affect a lot of other components which now show more or less data. 
+-> Requires "props chains" / "props drilling"
+
+For cross-component and app-wide state passing around data and updating function through props can become cumbersome though.
+
+Redux solves the same problem. So both REACT CONTEXT and REDUX are there to help us manage such cross-component or app-wide States.
+
+You can also use both Contexts and Redux in the same application.
+
+REACT CONTEXT vs REDUX😵‍💫
+-> REACT CONTEXT has a couple of potential disadvantages.
+   -> With React Context, you can have a very complex setup and managing state with React Context can become quite complex. You can end up with deeply nested JSX code.
+
+-> Performance can be an issue, it works good for low frequency states updates like theme changing, authentication but for high frequency state updates its not well suited - as quoted by an Official React TEAM Member.
+
+❓How REDUX Works?
+
+Redux is all about having one Central Data (state) Store, in your application.
+You have exactly one store. You never have more than one store.
+It's one store, for all your state for your entire application.
+
+In that state you could store authentication, themeing .... etc.
+
+For this components set up subscriptions, to our Central Store. They subscribe to the store, and whenever the data changes, the store notifies components, and then components can get the data they need, for example the current authentication status, so they get a slice of the Redux store, and they can then use it.
+
+      |--------------------Reducer function
+	|   (forwarded to)        |
+	|				  | Mutates (= changes) Store Data
+	|				  |
+	|				  V
+   Action		    CENTRAL DATA (STATE)
+    	|				  |
+	|				  | (Subscriptions)
+	|				  |
+	|	   (Dispatch)	  V
+	|---------------------Components
+
+⚠️Components Never, directly manipulate the store data. So we have that subscription, but we don't have a data flow in the other direction. (At least not a direct data flow.)
+
+Instead for that, we use a concept called REDUCERS. We have a reducer function. This reducer function which we have to set up. This function is responsible, for mutating. So for changing the store data.
+
+	             useReducer !== reducer (here)
+
+😵‍💫How do we now connect components and that reducer function?
+
+it will ofcourse be the components that should trigger a data change. It is for example a click on a button in a component that should trigger some data change. So how do we connect that?
+(Trigger)We have actions and components dispatch actions.
+
+
+Now an action is really just a simple JavaScript object, which describes the kind of operation, the reducers should perform. Therefore, Redux then forwards actions to the reducer, reads that description of the desired operation, and then this operation is performed by the reducer.
+
+So components dispatch actions, which describe what should be done, but don't do it directly, then these actions are forwarded to the reducer, the reducer then does what the action wants, the reducer to do and then the reducer, spits out a new state, which effectively will replace the existing state in that Central Data Store and when that happens, subscribing components are notified, so that they can update their UI.
+
+That's how Redux works!🫣
+
+🛣️Principles of Redux
+Predictability of Redux is determined by three most important principles as given below −
+
+1️⃣Single Source of Truth
+The state of your whole application is stored in an object tree within a single store. As whole application state is stored in a single tree, it makes debugging easy, and development faster.
+
+2️⃣State is Read-only
+The only way to change the state is to emit an action, an object describing what happened. This means nobody can directly change the state of your application.
+
+3️⃣Changes are made with pure functions
+To specify how the state tree is transformed by actions, you write pure reducers. A reducer is a central place where state modification takes place. Reducer is a function which takes state and action as arguments, and returns a newly updated state.
+
+🪜To install redux, you can follow the below steps −
+
+✅Run the following command in your command prompt to install Redux.
+
+	> npm install --save redux
+
+✅To use Redux with react application, you need to install an additional dependency as follows −
+
+	> npm install --save react-redux
+
+
+✅To install developer tools for Redux, you need to install the following as dependency −
+
+Run the below command in your command prompt to install Redux dev-tools.
+
+	> npm install --save-dev redux-devtools
+
+👥How to use Redux?
+A reducer function is a standard JavaScript function, but it will it be called by the Redux library and it will then always receive two pieces of input, two parameters, 
+ 
+1️⃣ - the old or existing state and 
+2️⃣ - the action that was dispatched.
+
+then this reducer function must return a certain output. It must always return a new state object. And therefore a reducer function should be a pure function. Which basically means that the same inputs, the same values for inputs always should produce exactly the same output.
+
+🫣Example - How to use it?
+Let us assume our application’s state is described by a plain object called initialState which is as follows −
+
+	const initialState = {
+   		isLoading: false,
+   		items: [],
+   		hasError: false
+	};
+
+Every piece of code in your application cannot change this state. To change the state, you need to dispatch an action.
+
+🎬What is an action?
+An action is a plain object that describes the intention to cause change with a type property. It must have a type property which tells what type of action is being performed. The command for action is as follows −
+
+	return {
+   		type: 'ITEMS_REQUEST', //action type
+   		isLoading: true //payload information
+	}
+Actions and states are held together by a function called Reducer. An action is dispatched with an intention to cause change. This change is performed by the reducer. Reducer is the only way to change states in Redux, making it more predictable, centralised and debuggable. A reducer function that handles the ‘ITEMS_REQUEST’ action is as follows −
+
+	const reducer = (state = initialState, action) => {
+   		switch (action.type) {
+      		case 'ITEMS_REQUEST':
+         			return Object.assign({}, state, {
+            		isLoading: action.isLoading
+         			})
+      		default:
+         			return state;
+   		}
+	};
+
+Redux has a single store which holds the application state. If you want to split your code on the basis of data handling logic, you should start splitting your reducers instead of stores in Redux.
+
+Redux follows the unidirectional data flow. It means that your application data will follow in one-way binding data flow. As the application grows & becomes complex, it is hard to reproduce issues and add new features if you have no control over the state of your application.
+
+Redux reduces the complexity of the code, by enforcing the restriction on how and when state update can happen. This way, managing updated states is easy. We already know about the restrictions as the three principles of Redux. Following diagram will help you understand Redux data flow better (In The Github).
+
+⭐⭐⭐⭐⭐⭐⭐⭐⭐ Attach the link
+
+An action is dispatched when a user interacts with the application.
+
+The root reducer function is called with the current state and the dispatched action. The root reducer may divide the task among smaller reducer functions, which ultimately returns a new state.
+
+The store notifies the view by executing their callback functions. The view can retrieve updated state and re-render again.
+
+🏪What is a Store?
+
+A store is an immutable object tree in Redux. A store is a state container which holds the application’s state. Redux can have only a single store in your application. Whenever a store is created in Redux, you need to specify the reducer.
+
+Let us see how we can create a store using the createStore method from Redux. One need to import the createStore package from the Redux library that supports the store creation process as shown below −
+
+	import { createStore } from 'redux';
+	import reducer from './reducers/reducer'
+	const store = createStore(reducer);
+
+A createStore function can have three arguments. The following is the syntax −
+
+	createStore(reducer, [preloadedState], [enhancer])
+
+A reducer is a function that returns the next state of app. A preloadedState is an optional argument and is the initial state of your app. An enhancer is also an optional argument. It will help you enhance store with third-party capabilities.
+
+A store has three important methods as given below.
+
+1️⃣getState()
+It helps you retrieve the current state of your Redux store. The syntax for getState is as follows −
+
+	store.getState()
+
+2️⃣dispatch()
+It allows you to dispatch an action to change a state in your application. The syntax for dispatch is as follows −
+
+	store.dispatch({type:'ITEMS_REQUEST'})
+3️⃣subscribe()
+It helps you register a callback that Redux store will call when an action has been dispatched. As soon as the Redux state has been updated, the view will re-render automatically. The syntax for dispatch is as follows −
+
+store.subscribe(()=>{ console.log(store.getState());})
+Note that subscribe function returns a function for unsubscribing the listener. To unsubscribe the listener, we can use the below code −
+
+	const unsubscribe = store.subscribe(()=>	{console.log(store.getState());});
+	unsubscribe();
+
+🍒What is a Reducer?
+Reducers are a pure function in Redux. Pure functions are predictable. Reducers are the only way to change states in Redux. It is the only place where you can write logic and calculations. Reducer function will accept the previous state of app and action being dispatched, calculate the next state and returns the new object.
+
+The following few things should never be performed inside the reducer −
+
+❌Mutation of functions arguments
+❌API calls & routing logic
+❌Calling non-pure function e.g. Math.random()
+
+The following is the syntax of a reducer −
+
+	(state,action) => newState
+
+we can write our logic in reducer and can split it on the logical data basis. Let us see how we can split reducers and combine them together as root reducer when dealing with a large application.
+
+Suppose, we want to design a web page where a user can access product order status and see wishlist information. We can separate the logic in different reducers files, and make them work independently. Let us assume that GET_ORDER_STATUS action is dispatched to get the status of order corresponding to some order id and user id.
+
+
+IMPORTANT! : ⚠️
+There should be no side effects inside of that function. So you must not send a HTTP request or write something to local storage or fetch something from local storage there.
+
+/reducer/orderStatusReducer.js
+import { GET_ORDER_STATUS } from ‘../constants/appConstant’;
+export default function (state = {} , action) {
+   switch(action.type) {
+      case GET_ORDER_STATUS:
+         return { ...state, orderStatusData: action.payload.orderStatus };
+      default:
+         return state;
+   }
+}
+
+
+/reducer/getWishlistDataReducer.js
+import { GET_WISHLIST_ITEMS } from ‘../constants/appConstant’;
+export default function (state = {}, action) {
+   switch(action.type) {
+      case GET_WISHLIST_ITEMS:
+         return { ...state, wishlistData: action.payload.wishlistData };
+      default:
+         return state;
+   }
+}
+
+we can combine both reducers by using Redux combineReducers utility. The combineReducers generate a function which returns an object whose values are different reducer functions. You can import all the reducers in index reducer file and combine them together as an object with their respective names.
+
+/reducer/index.js
+import { combineReducers } from ‘redux’;
+import OrderStatusReducer from ‘./orderStatusReducer’;
+import GetWishlistDataReducer from ‘./getWishlistDataReducer’;
+
+const rootReducer = combineReducers ({
+   orderStatusReducer: OrderStatusReducer,
+   getWishlistDataReducer: GetWishlistDataReducer
+});
+export default rootReducer;
+
+Now, you can pass this rootReducer to the createStore method as follows −
+
+const store = createStore(rootReducer);
+
+STEPS TO FOLLOW WHILE WORKING WITH REACT and REDUX ALTOGETHER!
+
+1️⃣ Install npm package : react-redux
+	> npm i react-redux
+	> npm i redux
+2️⃣Create the store directory in the react app and create an index.js file inside it, and write the following accordingly:
+	//creating the store
+	import {createStore} from 'redux';
+
+	//creating the reducer function
+	const counterReducer = (state = {counter: 0},action) => {
+	if(action.type === 'INCR'){
+		return {
+			counter: state.counter + 1
+		}
+	}
+	if(action.type === 'DECR'){
+		return {
+			counter: state.counter - 1
+		}
+	}
+	return state;
+	};
+
+	//creating the store
+	const store = createStore(counterReducer);
+
+	//export the store
+	export default store;
+IMPORTANT! : ⚠️
+The object which we are returning in our reducer, in our Redux reducer, return a brand new snapshot, a brand new state object which Redux will use to replace its existing state with, So the objects which we return will not be merged with the existing state. They will overwrite the existing state.
+
+So we must always set all the other states when we update a piece of state because we overwrite the old state.
+
+❌You should never super important never mutate the state, the existing state.
+
+❌	if(action.type === 'INCR'){
+			state.counter++;
+			return state;
+		}
+✅Instead, always override it by returning a brand new state object.
+
+
+This can lead to bugs, unpredictable behavior and it can make debugging your application harder as well.
+So even though it doesn't lead to a bug here it can have unwanted and unexpected side effects in bigger applications where your state gets out of sync and suddenly the UI is not reflecting your state correctly anymore.
+
+✅Do this in an immutable way
+
+3️⃣ Provide the store to the app or the highest level >
+by going to the react "index.js" file in the "SRC" folder
+
+	import React from 'react';
+	import ReactDOM from 'react-dom/client';
+    ⭐  import { Provider } from 'react-redux';
+
+	import './index.css';
+	import App from './App';
+
+	const root = ReactDOM.createRoot(document.getElementById('root'));
+	root.render(
+	⭐	<Provider>
+			<App />
+	⭐	</Provider>
+	);
+
+You could also wrap nested components (not only the highest one) with provider, but only wrapped components and their child components, and their child components of the child components, and so on. Only those components will have access to Redux thereafter.
+
+Now just by wrapping Provider around app, we're not telling react Redux and react therefore  which store we wanna provide.
+
+So, we have to import store from our index.js file in Store directory.
+
+	import store from './store/index'
+
+and then therfore tell provider that you are providing this store by:
+pointing that imported store on the special prop that is available on Provider.
+
+	<Provider store={store}>
+
+Now the app and its child components i.e the whole app can use the store.
+🫣They can get data out of the store.
+
+🫣They can set up a subscription to that data to be precise.
+
+🫣They also can dispatch actions.
+
+-----useSelector Hook, useDispatch-----
+
+----useSelector----
+- useSelector is a function that takes the current state as an argument and returns whatever data you want from it. It’s very similiar to mapStateToProps() and it allows you to store the return values inside a variable within the scope of you functional components instead of passing down as props.
+
+- used to select/get part of the state managed by redux.
+
+- When you use useSelector(), react-redux will automatically set a subscription to the redux store for this component in which you are using useSelector() and will recieve the latest value automatically whenever that changes in the redux store (that you are getting as a part of the state)
+
+- Its automatically reactive Changes to the Redux store will cause the component function to be re executed.
+
+- If you ever would unmount/remove the component which is utilizing the store, React Redux would also automatically clear the subscription for you. So,  it manages that subscription for you behind the scenes.
+
+
+-----useDispatch------
+
+ - useDispatch is a function that we import from react-redux library and assign it to a variable. And with this, we are able to dispatch any action to the store by simply adding an action as an argument to the new variable like the code above and that’s it.
+
+ - returns a dispatch function a function which we can call, which will dispatch an action against our Redux store.
+
+----Attaching payloads to actions----
+We can't predict all possible values we might wanna support in the actions (in the reducer function),
+
+you can't hard-code those values here in your Reducer.
+
+Instead, the action which we dispatch and which reaches the Reducer often needs to carry extra data.
+
+⭐whatever you want to configure
+	const payload = {...}
+
+	dispatch({type: 'action-name', payload});
+
+- It adds dynamism to the reducer function
+
+------Redux: TOOLKIT------
+⌚working with redux alot easier.
+
+TO start working:
+	> npm i @reduxjs/toolkit
+
+After installing you can then uninstall redux library because that is already included in this package.
+
+For docs refer: 
+	https://redux-toolkit.js.org/
+ 
+------Section 22: Deployment of REACT APPS-------
+
+☁️-----------------------☁️
+
+Development ------> Production
+
+⌚☁️ How and what steps to be taken?
+1️⃣ Test the App first thoroughly
+
+2️⃣ Optimize the code (add lazy loading)
+
+3️⃣ Build App for Production
+	-> execute a script, which will output production ready code automatically.
+
+4️⃣ Upload Production code to server
+
+5️⃣ Configure the server, hosting provider
+
+----Adding Lazy Loading----
+	  (Optimization)
+
+Lazy Loading - Load only when it's needed.
+
+- Comment the import statements, import it laziliy
+
+import() -> import dynamically when needed returns promise 
+
+	import('path_to_that_file')
+	.then(module => {can be executed functions whenever and whereever needed});
+
+<Suspense></Suspense>:
+- Import it from REACT
+- <Suspense> lets you display a fallback until its children have finished loading.
+
+Example: 
+<Suspense fallback={<Loading />}>
+  <Albums />
+</Suspense>
+
+lazy(): 
+- Call lazy outside your components to declare a lazy-loaded React component.
+
+- lazy lets you defer loading component’s code until it is rendered for the first time.
+
+Example: 
+import { lazy } from 'react';
+
+const MarkdownPreview = lazy(() => import('./MarkdownPreview.js'));
+
+-----Building the Code for Production----------
+
+The code we wrote is not the one we are or going to upload (Its only for development).
+
+For creating a production build we need to run:
+	> npm run build
+-> This will produce a code bundle with highly optimized and transformed code which is ready to be uploaded.
+-> after the command is finished, it will create a build folder,
+	build
+	 -> static
+	     -> css
+		 -> js
+
+build folder is the folder that should be deployed to a server.
+
+js folder has all the necessary code that you wrote and all the third party packages that you are using including the react library itself.
+
+-------Deployment---------
+A React SPA (single page application) is a static Website, consists of only HTML,CSS,JS only.
+
+Therefore, A Static site Host is Needed
+ -> Netlify, Firebase Hosting
+Search to Google: deploy static site
+
+------Configuring Server: Server side vs Client side routing------
+
+> Configure as SPA?
+  
+  Server Side Routing vs Client Side Routing
+
+
+(/some-route)---Server--(Production-Ready React Code)---
+	|												   |
+	|												   |
+ (Request)										   (Response)
+	|										[HTML,CSS,JS (React-Code)]
+	|												   |
+	|-----------Client-----------------------------(/some-route)
+
+
+IMPORTANT! : ⚠️
+when you have your application deployed on a server and a user enters a URL in the browser, what happens technically is that the browser sends a request to the server. The server then sends back a response, which of course, is in the end is this React application. So the HTML file, but also the JavaScript code that makes up this application. Now if we did not just send a request to main domain, but maybe also to some path like /posts or whatever path we have on our website, then that path also reaches the server on this initial request. And by default, the server would try to find the fitting response  for the path we requested in our request. For example, by searching for a folder with a name of some route. And of course, the server in this case would fail to find a fitting file because it doesn't have any server side logic for handling requests with different paths. What the server should instead do is always return
+exactly the same HTML file and the same JavaScript code so that this path, which we requested, can be resolved on the client side by that JavaScript code we requested, so by our React app that's using React Router.
+
+However, as mentioned, the default behavior is not that the server always returns the same file. Instead by default, it would look for a fitting file in a fitting folder based on the request we sent.
+And that's why we got this question whether we want to configure this as a single page application. By answering this question with yes,
+We configure the hosting site as to host it as a Single Page Application.
+
+IMPORTANT! : ⚠️
+When the hosting providers not ask you whether you want to configure the app as a single page application. In such cases, you manually must set up some redirection rule that basically forwards all requests to index.html (root-page).
+
 
