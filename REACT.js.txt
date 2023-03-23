@@ -1,5 +1,6 @@
 ----------------------------REACT JS---------------------------
 
+----------Section 1: Getting Started🎉🎊----------
 React is a javascript library for building USER INTERFACES.
 like
 - NETFLIX
@@ -34,7 +35,7 @@ BUILDING SPAs (Singel Page Applications):
 - Vue.js is a Component-Based UI framework, includes most care features. A bit less popular than React & Angular.
 
 
----------Exports and Imports---------
+-------------Exports and Imports--------------
 
 *PERSON.js*
 
@@ -64,7 +65,9 @@ import prs from './person.js'
 import {baseData} from './utility.js'
 import {clean} from './utility.js'
 
-****************************************Components*****************************************
+----------Section 3: React Basics & working with components❓🔨-----------
+
+----------------------Components-------------------
 React makes building complex, interactive and reactive user interfaces simpler
 React is all about "Components"
 
@@ -83,9 +86,9 @@ React allows you to create these (re-usable and reactive) components consisting 
 React uses a declarative approach to built these components.
  - Define the desired target state(s) and let react figure out the actual javascript DOM instructions.
 Here you wont write any dom updating events, with react and its components -> ITS MAGIC
-					BUILD YOUR OWN custom HTML Elements
+					  BUILD YOUR OWN custom HTML Elements
 
-*******************************Creating first Project**************************************
+--------Creating first Project🍾-----------
 for full docs -> visit create-react-app.dev
 Prerequisites : NODE JS must be installed
 
@@ -103,14 +106,13 @@ Then run this command to run a script that will start a local development server
 
 By running this command, it creates preconfigured folders with some basic REACT code files and a bunch of configuration files which will help you to build that react app for production use -> a couple of transformation and optimization steps between developing any REACT App.
 
-
 The Created folder contains alot of files and folders:
 1. package.json -> holds all the dependencies (react + other dev dependencies)
 2. SRC folder -> contains all the source code on which we will be working on.
 
 Command to install all the dependencies -> (packg.json)
 
-4.	$>:npm install
+4.	> npm install
 
 -> creates a node_modules folder -> holds all the packages that get install with above command.
 
@@ -131,15 +133,16 @@ Inside that directory, you can run several commands:
 
 We suggest that you begin by typing:
 
- $>: cd my_first_app
- $>: npm start
+	> cd my_first_app
+	> npm start
 
 
-**************Analysing a Standard React Project**************
+------Analysing a Standard React Project🏃‍♂️------
 
-Src folder is the one on which we will spend majority of our time.
+'src' folder is the one on which we will spend majority of our time.
 
-SRC
+'src'
+
  -> index.js -> this is the first code file which will be executed whenever you visit the site or basically localhost:3000 to be particular. (not exactly it will be run, but it is the starting point and before running on browsers it will be tranformed in a browser friendly version of code, as some features wont work in NORMAL JS but will work after transformation)
 		 -> in this file, we import ReactDOM object from react-dom third party library, which is one of our dependencies. (Basically react is split into 2 packages : REACT and REACTDOM)
 
@@ -148,7 +151,8 @@ root.render(<App />);
 
  -> App.js -> Contains a function named App and we then export this function and inside this function we return some HTML code which wrapped inside (parenthesis) (not regularly see, not a valid JS code) -> this is a JSX (special feature invented by th e react team and it works in JS files because of the transformation steps SRC -> PUBLIC (index.html));
 
-PUBLIC
+
+'public'
  -> index.html -> this is basically the only HTML file that is being used by the overall REACT application as it's a SPA.
 		   -> It is the only entry point, the place where the React-Driven UI should be rendered. NOTE: In this index.html -> regular HTML DOCUMENT STRUCTURE, and if we look at the body, you will find a DIV with ID : 'root'. That's the div where we inject or attach our react-driven UI. (doesn't hold any content initially)
 
@@ -162,7 +166,7 @@ So what is this <App />: ->
 	 - <App /> -> Its not a regular JS syntax -> called as JSX
 
 	
-**************************JSX***************************
+----------JSX----------
 JSX -> JAVASCRIPT AND XML (HTML == XML) and it works in JS files as because of the npm start process running the code get transformed to more browser-friendly code before everything is being served.
 
 
@@ -201,14 +205,14 @@ will look like this:
 
 That's why we need to wrap the JSX code in wrapping Div, as we can't write without wrapper in older codes, because we can't return more than 2 things.
 
-*****************BUILDING OUR COMPONENTS****************
-
+-----------Building our components-------------
 It is a good practice to actually putting these new components into new files so that you have one file per component.
 
 IN THE 
 	->SRC folder add
 		-> COMPONENTS FOLDER
 			-> here add the components source file
+
 NOTE : Don't move App.js as it is a special kind of component, you can move it but its not considered generally.
 
 With react we build a Component tree as components will get nested sometimes inside one another. You have the app component at the top and other nested inside it.
@@ -336,9 +340,8 @@ EXPENSES subfolder for - Expense Related stuff
 UI subfolder for - General UI Stuff
  - CARD
  .....etc
+----------Section 4: React State & Working with Events🙎‍♂️🧨------------
 
-SECTION 3 - User Interation and State
-- Making Apps Interactive & Reactive
 
 -----How We can Reaect to User Events and How such events can TRIGGER State Change?--------------
 
@@ -509,7 +512,8 @@ Presentational components vs Statefull components,
 stateless versus statefull components or dumb vs smart components
 It simply means that in react app you will have couple of components which manages some state (statefull components), and some components which don't manages some state (stateless components AKA presentational or DUMB component because it doesn't have any internal state it's just there to output some data.)
 
------Section 5 - Rendering Lists and Consitional Content-----
+----------Section 4: Rendering Lists and Conditional Content📃------------
+
 ---------Rendering Lists of Data------------
 
 When we got a bunch of objects into an array full of Component elements (JSX code), because if you do output an array of JSX elements here, like a couple of cards, then React is capable of simply rendering these elements.
@@ -546,7 +550,7 @@ Why REACT behave like this? -> Because it has no other way
 
 It currently simply checks the length of the Array and then has a look at the number of items that were already rendered. The individual items all look similar to React though so it can't know where a new item should be added. That's why we get this warning
 
-IMPORTANT! :⚠️
+IMPORTANT! : ⚠️
 We have a way of telling react where a new item it should be added and we do that by going to the place where we output our list of items. We add a special PROP to that item there (Key), it will help REACT to identify indiviual items (key should be a unique ID) (You can also use, index item (available in MAP as second argument) for special key) 
 
 You can use useState hook to update the component once we add a new item to that list.
@@ -558,7 +562,7 @@ We can't use long statements or flow EG: FOR , IF ELSE etc inside {}, But we can
 
 We can also use Short-Circuiting && and ||
 
-IMPORTANT! :⚠️
+IMPORTANT! : ⚠️
 We can store JSX content in variables. we can check before hand the content and then later return that.
 
 We can have multiple return statements (returning JS) for multiple different renderings according to the condition and use-case
@@ -576,8 +580,8 @@ Else You can use camelCasing
 					}
 			};
 
+----------Section 4: Styling React Components👖👕------------
 
-------------SECTION 6: Styling React Components-------------
 ----Setting Dynamic Inline Styles----
 
 we can add styles based on states of the component, by using ternary operator
@@ -722,8 +726,7 @@ We can add dynamic classes as normal classes
 using template literal
 for media queries we just need to add those in the module.css as normal media queries, and since we are specifying the class on the component therefore we dont need to do much else.
 
-
------------Section 7: Debugging React Apps-------------
+-----------Section 7: Debugging React Apps🛠️-------------
 
 Understand the error, where it is coming from from the console. then try to understand why it is coming.
 
@@ -748,7 +751,7 @@ After downloading you will get 2 tabs in Chrome Devtools:
 
 
 
-------Section 9: Working with Fragments, Refs etc.---------
+------Section 9: Working with Fragments, Refs etc.🧨---------
 			------JSX LIMITATION-------
 If we have adjacent root level JSX elements like in this example:
 	return (
@@ -887,8 +890,6 @@ For example, instead of exposing open() and close() methods on a Dialog componen
 Your first inclination may be to use refs to “make things happen” in your app. If this is the case, take a moment and think more critically about where state should be owned in the component hierarchy. Often, it becomes clear that the proper place to “own” that state is at a higher level in the hierarchy. See the Lifting State Up guide for examples of this.
 
 
-
-
 ✅To Create a Ref we need to import a hook ->
 
 ⚠️Only usable inside of functional components
@@ -907,13 +908,10 @@ Example:
 
 	return (
 		<input ref = {nameInputRef}>
-	)
+	);
 
- -> It returns a
-
---------Working of Ref--------
-
-And now a connection will be established. The first time React reaches this code and renders this code, it will actually set the values stored in nameInputRef to the native DOM element that is rendered based on this input.
+	--Working of Ref--
+Accod to above code, now a connection will be established. The first time React reaches this code and renders this code, it will actually set the values stored in nameInputRef to the native DOM element that is rendered based on this input.
 
 This ref value, which is being generated here always is an object, which always has a current prop and the current prop holds the actual value that ref is connected with Now, by default, it's undefined but as soon as this code ran, because of this ref prop, the nameInputRef is connected to that input and hence, it's actually the input which is being stored as a value in the current prop and what's being stored here really is the actual DOM node. So not some theoretical value or anything like that but the real DOM node,
 
@@ -950,7 +948,7 @@ Example: We are creating a simple form that comprises an input field with a labe
  - Controlled by the parent component
  - Have better control on the form data and values
 
---------------Section 10: Advanced: Handling side effects, Using Reducers and Context----------------
+--------------Section 10: Advanced: Handling side effects, Using Reducers and Context👨----------------
 
 --------What is an "Effect" Or a "Side Effect"---------
 
@@ -978,7 +976,7 @@ You would even create an infinite loop Because you would send the request whenev
 
 Therefore we'll have a better tool for handling side effects and that's a special React Hook which we can use. (The useEffect Hook)
 
----------The useEffect() Hook---------
+---------useEffect() Hook🪝---------
 
 	useEffect(() => { .. }, [ dependencies ]);
 
@@ -1076,7 +1074,7 @@ Application: Debouncing can be applied in implementing suggestive text, where we
 🤐User Typing : 
 Well, the trick is that we actually save the timer and for the next keystroke, we clear it so that we only have one ongoing timer at a time and only the last timer will, therefore, complete and as long as the user keeps on typing, we always clear all other timers and therefore, we only have one timer that completes, and that completes after 500 milliseconds, which is the delay the user has to issue a new keystroke to clear this timer.
 
--------------useReducer--------------
+-------------useReducer Hook🪝--------------
 
 Sometimes, you have more complex state - ForExample if it got miltiple states, multiple ways of changing it or dependencies to other states.
 
@@ -1103,8 +1101,6 @@ const [state, dispatchFn] = useReducer(reducerFn, initialArgs, initFn);
    import React, {useReducer} from 'react';
 
 🔁 Re-watch 117: useReducer & useEffect
-
-
 
 -----------------------------------------
 🤐 useState VS useReducer
@@ -1197,7 +1193,7 @@ We need to pass a prop on Context.Provider named exactly as "value" on which we 
 
 We can pass anything from functions to values,.... strings etc.
 
-----------useContext Hook------------
+----------useContext Hook🪝------------
 
 1️⃣ Import it:
 	import React , {useContext} from 'react';
@@ -1263,8 +1259,9 @@ Now you can use this AuthContextProvider component and wrap it over your App Com
 ----useImperativeHandle Hook-----
 Forward Ref's
 
+🔁 Rewatch 128: Diving into 'Forward Refs'
 
-------------React:BTS-------------
+------------Section 12: A Look Behind the scenes of React & Optimization Techniques🎬-------------
 
 😵‍💫How does REACT Works? 
 React -> "A Javascript library for building UI's"
@@ -1420,7 +1417,8 @@ When you need to remember the values of a function or an object, you can use hoo
 
 Finally, never use React Memo to wrap a class-based component; instead, extend PureComponent or implement the shouldComponentUpdate() method.
 
------------useCallback() Hook-----------
+-----------useCallback() Hook🪝-----------
+
 useCallback is a React Hook that lets you cache/save/store a function definition between re-renders.
 
 	const cachedFn = useCallback(fn, dependencies)
@@ -1456,7 +1454,7 @@ if you have two state updates in the same synchronous code snippet after each ot
 For Exapmle:
 In one long synchronous process, so for example, in one function that executes start to end without any callbacks or promises in between, in such cases React will take all the state updates that are produced by that function and it will batch them together into one state update.
 
-----------------useMemo() Hook-------------------
+----------------useMemo() Hook🪝-------------------
 
 useMemo is a React Hook that lets you cache the result of a calculation between re-renders.
 
@@ -1479,11 +1477,193 @@ IMPORTANT! : ⚠️
 
 ✅React will not throw away the cached value unless there is a specific reason to do that. For example, in development, React throws away the cache when you edit the file of your component. Both in development and in production, React will throw away the cache if your component suspends during the initial mount. In the future, React may add more features that take advantage of throwing away the cache—for example, if React adds built-in support for virtualized lists in the future, it would make sense to throw away the cache for items that scroll out of the virtualized table viewport. This should match your expectations if you rely on useMemo solely as a performance optimization. Otherwise, a state variable or a ref may be more appropriate.
 
------------------Section 13: An Alternative Way of Building Componenets: Class Based Components------------------
+-----------------Section 13: An Alternative Way of Building Componenets: Class Based Components🔨🧩------------------
 
-            🔁SKIP THIS SECTION UNTILL COURSE FINISHES
+1️⃣Functional Component (Default & Most Modern Approach):
+	
+	function Product(props){
+		return <h2>A Product!</h2>
+	}
 
------------------Section 14: Sending Http Requests (e.g. connecting to the database)------------------
+Components are regular JavaScript functions which return renderable results (typically JSX)
+
+2️⃣ClassBased Components  (Alternative for above):
+	
+	class Product extends Component {
+
+		render(){
+			return <h2>A Product!</h2>
+		}
+	}
+
+Components can also be defined as JS classes where a render() method defines the to-be-rendered output; 
+
+You require these class-based components before React 16.8, because you had to use class-based components to manage 'State'.
+            
+After, React 16.8 introduced 'React Hooks' for functional components.
+
+---------Creating first class based function----------
+
+	
+1️⃣import {Component} from 'react';
+This component class, adds important functionality, to make your class work as a component. It also adds a couple of important properties.For example, the props property.
+
+2️⃣		class COMPONENT_NAME extends Component {
+		
+		//expected by React which react will call when it finds a component being used in JSX code.
+		//equivalent to return statement in functional components.
+		render(){
+			'this.props' is now available after inheriting this class from 'Component' Class
+		}
+
+	}
+
+IMPORTANT! : ⚠️
+Class-Based components can work together with functional components, that is you can have both type of components in a project.
+
+--------Working with states and Events (class-based)----------
+In class based components you simply adds methods in a class such as (toggleHandler and much more) 
+
+To define 'states' you would use a constructor() method in a class. There you can do initialization of states.
+
+IMPORTANT! : ⚠️
+In a class based component, your state will always be a object and the name of the state is and must be 'state' only. The name is not upto you. Here you have to group all the state that mades the component work into one OBJECT.
+
+
+	class COMPONENT_NAME extends Component{
+
+		//these methods are those methods which we define in the Component function.
+		METHOD_NAME(){
+			
+		}
+		
+		//when you add the constructor to the class you must call 'super()' to initialize the parent properties with parent constructor.
+
+		constructor(){
+			super();
+			this.state = {
+				property1: intialValue,
+				property2: intialValue,
+				property3: intialValue,
+				.
+				.
+				.
+			}
+		}
+	}
+
+To set a state value, we have a predefined function 'setState' which takes an object in the parameter. This won't overwrite the previous state, it will merge it behind the scenes. (Opposite as of functional components).
+
+Here, you can also use the function form but there also you need to return the object.
+
+	this.setState({
+		property2: 0
+	})
+	//merges with the previous state
+
+We can define helper CONST in render functions 
+
+Moreover, you need to bind the 'this' keyword on the methods with the click events and any-other events.
+For-Example: 
+	the 'onClick' on the button will only work if the this keyword is bind to the instance of the class. 
+
+--------The component life-cycle (class-based)---------
+Class-Based components can't use React Hooks!.
+
+Class-based components have access to the lifecycle functions like componentWillMount(), componentDidMount(),componentWillReceiveProps(),componentWillUpdate(), shouldComponentUpdate(),render() and componentWillUnmount();. 
+
+These lifecycle functions are called at different stages of the lifecycle and are used for a variety of purposes like changing the state or doing some work (like fetching data from an external API). They are also referred to as lifecycle hooks. 
+
+componentDidMount() -> called once component mounted (was evaluated & rendered), Equivalent to useEffect( ,[])
+
+componentDidUpdate() -> called once component updated (was evaluated & rendered), Equivalent to useEffect( ,[someValues]);
+
+ - it recieves two arguments (previous props and prev state)
+
+componentWillUnmount() -> called right before component is unmounted (removed from DOM), Equivalent to cleanup function from useEffect, useEffect(()=>{
+	return () => {
+		//Equivalent
+	}
+},[] )
+
+-------Class-Based Components and Context--------
+Only the data-using part changes as we can' t use React Hooks (particulary useContext), else remains the same, providing the data using provider and all.
+
+We Have two Ways.
+1️⃣ Consumer Method:
+	-> which is shown in the Context API part.
+
+
+There is no PERFECT QUIVALENT METHOD!
+2️⃣ A static property named as contextType which is used to access the context data. It can be utilized by using this.context. This method, however, limits your consumption, only one context at a time.
+
+	static contextType = ContextName;
+
+Now you can access it with the help of 'this.context'
+
+---------Introduction to Error Boundries-----------
+This could be the reason to use Class-Based Components
+
+Error boundaries are React components that catch JavaScript errors anywhere in their child component tree, log those errors, and display a fallback UI instead of the component tree that crashed. Error boundaries catch errors during rendering, in lifecycle methods, and in constructors of the whole tree below them.
+
+A class component becomes an error boundary if it defines either (or both) of the lifecycle methods static getDerivedStateFromError() or componentDidCatch(). Use static getDerivedStateFromError() to render a fallback UI after an error has been thrown. Use componentDidCatch() to log error information.
+
+
+	class ErrorBoundary extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = { hasError: false };
+	}
+
+	static getDerivedStateFromError(error) {
+		// Update state so the next render will show the fallback UI.
+		return { hasError: true };
+	}
+
+	componentDidCatch(error, errorInfo) {
+		// You can also log the error to an error reporting service
+		logErrorToMyService(error, errorInfo);
+	}
+
+	render() {
+		if (this.state.hasError) {
+		// You can render any custom fallback UI
+		return <h1>Something went wrong.</h1>;
+		}
+
+		return this.props.children; 
+	}
+	}
+
+Then you can use it as a regular component:
+
+	<ErrorBoundary>
+	<MyWidget />
+	</ErrorBoundary>
+
+
+Error boundaries work like a JavaScript catch {} block, but for components. Only class components can be error boundaries. In practice, most of the time you’ll want to declare an error boundary component once and use it throughout your application.
+
+
+❓Where to Place Error Boundaries
+The granularity of error boundaries is up to you. You may wrap top-level route components to display a “Something went wrong” message to the user, just like how server-side frameworks often handle crashes. You may also wrap individual widgets in an error boundary to protect them from crashing the rest of the application.
+
+❓How About try/catch?
+try / catch is great but it only works for imperative code. React components are declarative and specify what should be rendered.
+
+Error boundaries preserve the declarative nature of React, and behave as you would expect. For example, even if an error occurs in a componentDidUpdate method caused by a setState somewhere deep in the tree, it will still correctly propagate to the closest error boundary.
+
+❓How About Event Handlers?
+Error boundaries do not catch errors inside event handlers. React doesn’t need error boundaries to recover from errors in event handlers. Unlike the render method and lifecycle methods, the event handlers don’t happen during rendering. So if they throw, React still knows what to display on the screen. If you need to catch an error inside an event handler, use the regular JavaScript try / catch statement.
+
+
+IMPORTANT! : ⚠️
+Error boundaries only catch errors in the components below them in the tree. An error boundary can’t catch an error within itself. If an error boundary fails trying to render the error message, the error will propagate to the closest error boundary above it. This, too, is similar to how the catch {} block works in JavaScript.
+As of React 16, errors that were not caught by any error boundary will result in unmounting of the whole React component tree.
+
+
+
+-----------------Section 14: Sending Http Requests (e.g. connecting to the database)📖------------------
 AXIOS (a package for javascript) could be used to send http requests 
 Fetch API : BUILT into Browsers, allows to send and fetch some data to/from the API
 
@@ -1513,21 +1693,13 @@ A custom hook is a special JavaScript function whose name starts with ‘use’ 
 Example:
 	🫣use-counter.js
 
-
-
-
-
-
-
-
-
 ✅If you call a custom hook in one of your components and that component, for example of registers a state or an effect, then this state and effect will be tied to the component in which you use your custom hook.
 
 ✅If we use a custom hook in multiple components, every component will receive its own state.
 
 You can return whatever you wanna return in your custom hooks. Could be an array or an object or a number or a state variable.
 
----------------------------------------Section 18: Diving deep into REDUX--------------------------------------------
+---------------------------------------Section 18: Diving deep into REDUX🤿-----------------------------------------
 
 ⭐Redux is a third party react library.
 
@@ -1631,7 +1803,6 @@ To specify how the state tree is transformed by actions, you write pure reducers
 ✅To use Redux with react application, you need to install an additional dependency as follows −
 
 	> npm install --save react-redux
-
 
 ✅To install developer tools for Redux, you need to install the following as dependency −
 
@@ -1818,6 +1989,7 @@ STEPS TO FOLLOW WHILE WORKING WITH REACT and REDUX ALTOGETHER!
 
 	//export the store
 	export default store;
+
 IMPORTANT! : ⚠️
 The object which we are returning in our reducer, in our Redux reducer, return a brand new snapshot, a brand new state object which Redux will use to replace its existing state with, So the objects which we return will not be merged with the existing state. They will overwrite the existing state.
 
@@ -1874,9 +2046,10 @@ Now the app and its child components i.e the whole app can use the store.
 
 🫣They also can dispatch actions.
 
------useSelector Hook, useDispatch-----
+-----useSelector, useDispatch Hook🪝-----
 
-----useSelector----
+----useSelector Hook🪝----
+
 - useSelector is a function that takes the current state as an argument and returns whatever data you want from it. It’s very similiar to mapStateToProps() and it allows you to store the return values inside a variable within the scope of you functional components instead of passing down as props.
 
 - used to select/get part of the state managed by redux.
@@ -1888,7 +2061,7 @@ Now the app and its child components i.e the whole app can use the store.
 - If you ever would unmount/remove the component which is utilizing the store, React Redux would also automatically clear the subscription for you. So,  it manages that subscription for you behind the scenes.
 
 
------useDispatch------
+-----useDispatch Hook🪝------
 
  - useDispatch is a function that we import from react-redux library and assign it to a variable. And with this, we are able to dispatch any action to the store by simply adding an action as an argument to the new variable like the code above and that’s it.
 
@@ -1920,7 +2093,7 @@ For docs refer:
 	https://redux-toolkit.js.org/
 
 
---------------Section 19: Advanced Redux--------------
+--------------Section 19: Advanced Redux💯--------------
  
 ---------Side Effects, Async Tasks & Redux---------
 ⚠️Reducers must be pure, side-effect free, synchronous functions.
@@ -1992,6 +2165,10 @@ we can perform any asynchronous code, any side effects,  because we will not yet
 
 
 
+🔁 Rewatch 260: using an action creator Thunk
+
+
+
 ----------Redux DevTools------------
 Developer Tools to power-up Redux development workflow or any other architecture which handles the state change.
 It can be installed as a standalone app or a chrome Extension.
@@ -2022,6 +2199,7 @@ We can add client-side React code that basically watches the currently active UR
 (changes the visible content without fetching a new HTML file)
 
 To work with Multipage SPA's, we need a extra package called as 'react-router-dom' (belongs to the react router tool)
+
      🌐https://reactrouter.com/en/main
 
 🎗️Install the following package:
@@ -2097,107 +2275,6 @@ If we enter something totally different, we get an error, though because we try 
 	- Explore it Seperately
 
 ------🗺️navigating between pages using links-------
-
-
-------Section 22: Deployment of REACT APPS-------
-
-☁️-----------------------☁️
-
-Development ------> Production
-
-⌚☁️ How and what steps to be taken?
-1️⃣ Test the App first thoroughly
-
-2️⃣ Optimize the code (add lazy loading)
-
-3️⃣ Build App for Production
-	-> execute a script, which will output production ready code automatically.
-
-4️⃣ Upload Production code to server
-
-5️⃣ Configure the server, hosting provider
-
-----Adding Lazy Loading----
-	  (Optimization)
-
-Lazy Loading - Load only when it's needed.
-
-- Comment the import statements, import it laziliy
-
-import() -> import dynamically when needed returns promise 
-
-	import('path_to_that_file')
-	.then(module => {can be executed functions whenever and whereever needed});
-
-<Suspense></Suspense>:
-- Import it from REACT
-- <Suspense> lets you display a fallback until its children have finished loading.
-
-Example: 
-<Suspense fallback={<Loading />}>
-  <Albums />
-</Suspense>
-
-lazy(): 
-- Call lazy outside your components to declare a lazy-loaded React component.
-
-- lazy lets you defer loading component’s code until it is rendered for the first time.
-
-Example: 
-import { lazy } from 'react';
-
-const MarkdownPreview = lazy(() => import('./MarkdownPreview.js'));
-
------Building the Code for Production----------
-
-The code we wrote is not the one we are or going to upload (Its only for development).
-
-For creating a production build we need to run:
-	> npm run build
--> This will produce a code bundle with highly optimized and transformed code which is ready to be uploaded.
--> after the command is finished, it will create a build folder,
-	build
-	 -> static
-	     -> css
-		 -> js
-
-build folder is the folder that should be deployed to a server.
-
-js folder has all the necessary code that you wrote and all the third party packages that you are using including the react library itself.
-
--------Deployment---------
-A React SPA (single page application) is a static Website, consists of only HTML,CSS,JS only.
-
-Therefore, A Static site Host is Needed
- -> Netlify, Firebase Hosting
-Search to Google: deploy static site
-
-------Configuring Server: Server side vs Client side routing------
-
-> Configure as SPA?
-  
-  Server Side Routing vs Client Side Routing
-
-
-(/some-route)---Server--(Production-Ready React Code)---
-	|												   |
-	|												   |
- (Request)										   (Response)
-	|										[HTML,CSS,JS (React-Code)]
-	|												   |
-	|-----------Client-----------------------------(/some-route)
-
-
-IMPORTANT! : ⚠️
-when you have your application deployed on a server and a user enters a URL in the browser, what happens technically is that the browser sends a request to the server. The server then sends back a response, which of course, is in the end is this React application. So the HTML file, but also the JavaScript code that makes up this application. Now if we did not just send a request to main domain, but maybe also to some path like /posts or whatever path we have on our website, then that path also reaches the server on this initial request. And by default, the server would try to find the fitting response  for the path we requested in our request. For example, by searching for a folder with a name of some route. And of course, the server in this case would fail to find a fitting file because it doesn't have any server side logic for handling requests with different paths. What the server should instead do is always return
-exactly the same HTML file and the same JavaScript code so that this path, which we requested, can be resolved on the client side by that JavaScript code we requested, so by our React app that's using React Router.
-
-However, as mentioned, the default behavior is not that the server always returns the same file. Instead by default, it would look for a fitting file in a fitting folder based on the request we sent.
-And that's why we got this question whether we want to configure this as a single page application. By answering this question with yes,
-We configure the hosting site as to host it as a Single Page Application.
-
-IMPORTANT! : ⚠️
-When the hosting providers not ask you whether you want to configure the app as a single page application. In such cases, you manually must set up some redirection rule that basically forwards all requests to index.html (root-page).
 
 PROBLEM! : ❌
 Adding a link with the default anchor element and this default HTML anchor element takes a href attribute, which could lead to (like /products) a url to be specific and if we click it, we go to The Products Page. We have a problem with this approach. If you watch this refresh icon on the browser, you will see that it briefly flashes and turns to a cross and back to a refresh icon.
@@ -2621,6 +2698,10 @@ To access the error, you can use the error property on the match state:
 		</div>
 	)
 	}
+IMPORTANT! : ⚠️
+Loader()'s must return null or any other value.
+You should make sure that you do add an extra return null statement in all if statement branches where nothing would be returned otherwise to avoid errors.
+
 
 ------Returning Responses in Loader------
 
@@ -3507,4 +3588,635 @@ Here we have to manually parse the data that is coming from the action or loader
 ----------Controlling which data to be deffered----------
 await is your lever, your switch for controlling which data should be awaited before moving to this page, and which data should be deferred So, where you wanna load the data after moving to the page.
 
-Section 21: Adding Authentication To React Apps🔒
+-----------Section 21: Adding Authentication To React Apps🔒----------
+Authentication is needed if content should be protected (not accessible by everyone)
+
+Getting Permission:
+1️⃣Client sends a Request that contains User Credentials
+
+2️⃣Backend,then validates the Credentials or creates a new User according to the request, or need.
+
+3️⃣If the Credentials are correct then server sends the response (Yes/No) that the user is granted permission to view the resources. But a "Yes" alone is not enough to then access protected resources (API endpoints)
+
+Now to erradicate the above problem, we could use 2 solutions:
+
+1️⃣Server-Side Sessions 
+
+Here, we store unique identifier on server (map it to a specific client with help of an ID), send same to client.(After a user logged in and authenticated)
+
+Client then send backs the identifier along with requests to protected resources.
+
+Popular for full stack application where you dont have decoupled frontend and Backend (Not ideal for REACT).
+
+2️⃣Authentication Tokens
+
+On the server, after the user was authenticated or verified or send the valid user credentials, we create (but not store) "permission" token (which is a string created using an algorithm and has some information) on server, send token to client.
+
+Its validity can only be checked by the backend (as it created by backend with some private key which is known to backend only).
+
+Client send token along with requests to protected resources.
+
+You can add the token in the request headers under Authorization header: 
+	'Authorization' : 'Bearer ' + token
+attach the token to the localstorage.
+
+
+React Context can be used to handle tokens all over the app and reflect UI changes based on authentication.
+
+Using 'react-router-dom', we can also use that package for handling tokens and we could to our root route which in the end wraps all other routes and there we could add a loader, which simply takes a look at local storage and extracts the token from local storage and that token would then be available through the loader data of that root route in all other routes.
+
+The best thing about that is that React Router will automatically reevaluate that if we for example, log out, if we submit that logout form. So it will then re fetch that token and for example determine that the token doesn't exist and then update all the pages that use that loader data.
+
+Therefore ensures that we always have the latest information about that token.
+
+
+
+-------Query Parameters-------
+
+The useSearchParams hook is used to read and modify the query string in the URL for the current location. Like React's own useState hook, useSearchParams returns an array of two values: the current location's search params and a function that may be used to update them. Just as React's useState hook, setSearchParams also supports functional updates. Therefore, you may provide a function that takes a searchParams and returns an updated version.
+
+	import * as React from "react";
+	import { useSearchParams } from "react-router-dom";
+
+	function App() {
+	let [searchParams, setSearchParams] = useSearchParams();
+
+	function handleSubmit(event) {
+		event.preventDefault();
+		// The serialize function here would be responsible for
+		// creating an object of { key: value } pairs from the
+		// fields in the form that make up the query.
+		let params = serializeFormQuery(event.target);
+		setSearchParams(params);
+	}
+
+	return (
+		<div>
+		<form onSubmit={handleSubmit}>{/* ... */}</form>
+		</div>
+	);
+	}
+
+The setSearchParams function works like navigate, but only for the search portion of the URL. Also note that the second arg to setSearchParams is the same type as the second arg to navigate.
+
+Example: 
+	import * as React from "react";
+	import { View, SearchForm, TextInput } from "react-native";
+	import { useSearchParams } from "react-router-native";
+
+	function App() {
+	let [searchParams, setSearchParams] = useSearchParams();
+	let [query, setQuery] = React.useState(
+		searchParams.get("query")
+	);
+
+	function handleSubmit() {
+		setSearchParams({ query });
+	}
+
+	return (
+		<View>
+		<SearchForm onSubmit={handleSubmit}>
+			<TextInput value={query} onChangeText={setQuery} />
+		</SearchForm>
+		</View>
+	);
+	}
+
+Exmple of a Query Parameter: 
+http://localhost:8080/users?category=audience&age=21
+
+	{
+		category:audience,
+		age:21
+	}
+------URL constructor-------
+The URL interface is used to parse, construct, normalize, and encode URLs. It works by providing properties which allow you to easily read and modify the components of a URL.
+
+You normally create a new URL object by specifying the URL as a string when calling its constructor, or by providing a relative URL and a base URL. You can then easily read the parsed components of the URL or make changes to the URL.
+More Info:
+https://developer.mozilla.org/en-US/docs/Web/API/URL
+
+------Protecting Routes-----
+Certain routes here should not always be accessible. Because we shouldn't be able to reach these routes if we're not logged in because we won't be able to use them correctly anyways. 
+
+So how can we add this kind of protection then?
+
+We could utilize a loader. A loader that simply checks if we have a token.
+
+	export function checkAuthLoader(){
+		const token = getAuthToken();
+		if(!token){
+			return redirect('/auth');
+		}
+		return null;
+	}
+
+Now simply add the loader to those routes which needs to be protected.
+
+------Adding automatic logout------
+We need a way to check whether there is a auth token in storage whenever the root component loads.
+We can use useEffect in RootLayout of the app as specified below.
+
+	function RootLayout() {
+	// const navigation = useNavigation();
+	const token = useLoaderData();
+	const submit = useSubmit();
+
+	useEffect(()=>{
+		if(!token){
+		return;
+		}
+		setTimeout(()=>{
+		submit(null, {action:'/logout',method:'post'});
+		},timeout-time);
+	},[token, submit])
+
+
+	return (
+		<>
+		<MainNavigation />
+		<main>
+			{/* {navigation.state === 'loading' && <p>Loading...</p>} */}
+			<Outlet />
+		</main>
+		</>
+	);
+	}
+
+This solution still has the flaw:
+we might have logged in. Then we were away for 10 minutes. Then we reloaded this application and then therefore, this effect was triggered again. We found a token in the local storage, because we did log in 10 minutes ago, but now we reset that timer to specified timer.
+
+ - that’s not realistic
+it's not enough to always set this to specified timer, Instead we need to manage and register, the actual token expiration.
+
+And to do that, we should go to our action that's triggered
+
+Solution is, the action where the user is being authenticate , We can set a item in localStorage that will define the time.
+
+	const expiration = new Date();
+	expiration.setHours(expiration.getHours() + 1);
+	localStorage.setItem('expiration', expiration.toISOString());
+
+
+
+
+	//RootLayout.js
+	useEffect(() => {
+		if (!token) {
+		return;
+		}
+
+		if(token === 'EXPIRED'){
+		submit(null, { action: '/logout', method: 'post' });
+		}
+
+	const tokenDuration = getTokenDuration();
+	console.log(tokenDuration);
+
+		setTimeout(() => {
+		submit(null, { action: '/logout', method: 'post' });
+		}, tokenDuration);
+	}, [token, submit])
+
+--------Section 22: Deployment of REACT APPS☁️----------
+
+Development ------> Production
+
+⌚☁️ How and what steps to be taken?
+1️⃣ Test the App first thoroughly
+
+2️⃣ Optimize the code (add lazy loading)
+
+3️⃣ Build App for Production
+	-> execute a script, which will output production ready code automatically.
+
+4️⃣ Upload Production code to server
+
+5️⃣ Configure the server, hosting provider
+
+----Adding Lazy Loading----
+	  (Optimization)
+
+Lazy Loading - Load only when it's needed.
+
+- Comment the import statements, import it laziliy
+
+import() -> import dynamically when needed returns promise 
+
+	import('path_to_that_file')
+	.then(module => {can be executed functions whenever and whereever needed});
+
+<Suspense></Suspense>:
+- Import it from REACT
+- <Suspense> lets you display a fallback until its children have finished loading.
+
+Example: 
+<Suspense fallback={<Loading />}>
+  <Albums />
+</Suspense>
+
+lazy(): 
+- Call lazy outside your components to declare a lazy-loaded React component.
+
+- lazy lets you defer loading component’s code until it is rendered for the first time.
+
+Example: 
+import { lazy } from 'react';
+
+const MarkdownPreview = lazy(() => import('./MarkdownPreview.js'));
+
+---------Building the Code for Production----------
+
+The code we wrote is not the one we are or going to upload (Its only for development).
+
+For creating a production build we need to run:
+	> npm run build
+-> This will produce a code bundle with highly optimized and transformed code which is ready to be uploaded.
+-> after the command is finished, it will create a build folder,
+	build
+	 -> static
+	     -> css
+		 -> js
+
+build folder is the folder that should be deployed to a server.
+
+js folder has all the necessary code that you wrote and all the third party packages that you are using including the react library itself.
+
+-------Deployment---------
+A React SPA (single page application) is a static Website, consists of only HTML,CSS,JS only.
+
+Therefore, A Static site Host is Needed
+ -> Netlify, Firebase Hosting
+Search to Google: deploy static site
+
+------Configuring Server: Server side vs Client side routing------
+
+> Configure as SPA?
+  
+  Server Side Routing vs Client Side Routing
+
+
+(/some-route)---Server--(Production-Ready React Code)---
+	|												   |
+	|												   |
+ (Request)										   (Response)
+	|										[HTML,CSS,JS (React-Code)]
+	|												   |
+	|-----------Client-----------------------------(/some-route)
+
+
+IMPORTANT! : ⚠️
+when you have your application deployed on a server and a user enters a URL in the browser, what happens technically is that the browser sends a request to the server. The server then sends back a response, which of course, is in the end is this React application. So the HTML file, but also the JavaScript code that makes up this application. Now if we did not just send a request to main domain, but maybe also to some path like /posts or whatever path we have on our website, then that path also reaches the server on this initial request. And by default, the server would try to find the fitting response  for the path we requested in our request. For example, by searching for a folder with a name of some route. And of course, the server in this case would fail to find a fitting file because it doesn't have any server side logic for handling requests with different paths. What the server should instead do is always return
+exactly the same HTML file and the same JavaScript code so that this path, which we requested, can be resolved on the client side by that JavaScript code we requested, so by our React app that's using React Router.
+
+However, as mentioned, the default behavior is not that the server always returns the same file. Instead by default, it would look for a fitting file in a fitting folder based on the request we sent.
+And that's why we got this question whether we want to configure this as a single page application. By answering this question with yes,
+We configure the hosting site as to host it as a Single Page Application.
+
+IMPORTANT! : ⚠️
+When the hosting providers not ask you whether you want to configure the app as a single page application. In such cases, you manually must set up some redirection rule that basically forwards all requests to index.html (root-page).
+
+-------Section 24: Animating React Apps📽️🍿--------
+🤿We can add transitions using CSS transitions.
+
+🤿We can add animations using CSS animations and control it in REACT with help of classes.
+
+
+🙅Limitations of using CSS Transitions and animations
+ - Here, all our html code is in the dom, no matter what the animation state is.
+ For Example: Modal close and open animations can only be visible to the end user, but it can be seen using devtools. The elements are always there.
+
+ state changes can ruin the animations and transitions sometime.
+
+------using ReactTransitionGroup-----
+Its a package not created by official react team, but with help of some vibrant community of React.
+
+It allows you to smoothly animate the elements while mounting and unmounting the elements from the DOM.
+
+1️⃣It has an important component named as 'Transition'
+	import Transition from 'react-transition-group/Transition';
+
+2️⃣We wrap this component around a component which is then to be transitioned.
+
+Then we add the options to it, how we want to animate:
+Which are provided in the documentations.
+
+There is also CSSTransition Component which can also be used for animations.
+
+There are other alterantives packages for animations such as React move, React motion, React Router Transition.
+
+More info about these React Transition Groups.
+https://reactcommunity.org/react-transition-group/
+https://reactcommunity.org/react-transition-group/transition
+
+
+-------Section 25: Replacing Redux with React Hooks💯--------
+Building your own state management store is possible with only React. (Redux Like Store)
+
+✅Steps to follow:
+
+1️⃣In the src folder create a directory named 'hooks-store' under that directory create a file named 'store.js'
+
+		- hooks-store
+			- store.js
+2️⃣In that file create a 'globalState' varaible.
+
+Now we also want to have a couple of places in the app where we can listen to changes in that state.
+
+In the same file, add a variable named, 'listeners' 
+
+We also need a couple of actions which can be dispatched.
+
+	import {useState,useEffect} from 'react';
+
+	let globalState = {};
+	let listeners = [];
+	let actions = {};
+
+	//Custom-Hook🪝
+	export const useStore = () => {
+		/*
+			we need a mechanism so that we can re-render a component upon a state change.
+			(HINT: useState() fits best)
+			It's defined outside of my hook. So it's global.It's not recreated when we call useStore.
+
+			we will use globalState variable, if it changes then the following component re-renders.
+			
+			whenever any file imports this file or something from that file gets the same shared data.
+		
+		*/
+		
+		const setState = useState(globalState)[1];
+		const dispatch = (actionIdentifier, payload) => {
+			const newState = actions[actionIdentifier](globalState, payload)
+			globalState = {...globalState, ...newState};
+
+			for(const listener of listeners){
+				listener(globalState);
+			}
+
+		};
+
+		useEffect(() => {
+			//adding the listener
+			listeners.push(setState);
+
+			//unmounts
+			return () => {
+				listeners = listeners.filter(li => li !== setState);
+			}
+		},[setState]);
+
+		return [globalState, dispatch];
+	};
+
+	export const initStore = (userActions, initialState) => {
+		if(initialState){
+			globalState = {...globalState, initialState};
+		}
+		actions = {...actions, ...userActions};
+	}
+
+It is usable now to now create stores of various context and configure it according to our use, thatis we can create our own actions and dispatch the actions to update the store (Central).
+
+Listeners should be an array full of functions which we can call to update all components that are using the custom hook. It would be great that if a component is unmounted we get rid of its listeners.
+
+OPTIMIZATION! : 🔨🤖
+export const useStore = (shouldListen = true) => {
+		const setState = useState(globalState)[1];
+		const dispatch = (actionIdentifier, payload) => {
+			const newState = actions[actionIdentifier](globalState, payload)
+			globalState = {...globalState, ...newState};
+
+			for(const listener of listeners){
+				listener(globalState);
+			}
+		};
+
+		useEffect(() => {
+			//adding the listener only when it needs to
+			if(shouldListen){
+				listeners.push(setState);
+
+			}
+			//unmounts if it is listened.
+			return () => {
+				if(shouldListen){
+					listeners = listeners.filter(li => li !== setState);
+				}
+			}
+		},[setState,shouldListen]);
+
+		return [globalState, dispatch];
+	};
+
+We can use 'shouldListen' to register a listener for this component or not because if we have a component which only uses our store to dispatch actions, then we don't want to listen to changes.
+
+It prevents additional rendering with the help of 'React.Memo()'
+
+For an npm package, you can also use this package named:
+use-global-hook, it also provides the same functionality as we saw above.
+https://www.npmjs.com/package/use-global-hook
+
+-------Section 26: Testing React Apps (Unit Tests)💯--------
+
+What is "Testing" and "Why"?
+🙎‍♂️(Manual Testing):
+Write Code <> Preview & Test in Browser. Its important as you will see what the end users will see.
+Error-Prone: It's hard to test all possible combinations and scenarios.
+
+🤖(Automated Testing):
+Not a Replacement!, But it's an addtion
+You write an extra code that test your main application code.
+You test the indiviual building blocks of your app.
+It allows you to test ALL building blocks at once.
+
+-----Different Kinds of Automated Testing----
+you have many types of tests:
+1️⃣Unit Tests
+Test the individual building blocks (functions, components) in isolation.
+
+Project contains alot of unit tests, typically hundred or dozens of unit tests.
+
+The most common / important kind of tests.
+
+2️⃣Integration Tests
+Test the combination of multiple building blocks.
+Projects typically contain a couple of integration tests.
+
+Also important ,but focus on unit test in most cases. 
+
+3️⃣End-to-End (e2e) Tests
+Test complete scenarios in your app as the user would experience them.
+Projects typically contain only a few e2e tests.
+Important but can also be done manually (partially).
+
+❓What to test & How to?
+(What)
+Test the different building blocks.
+Unit Tests: The smallest building blocks that make up your app.
+(How)
+Test success and error cases, but also test rare cases (but possible) results.
+
+Technical Setup & Involved Tools🔨
+We need a tool for running our tests and asserting the results.
+In particular with React, We need a tool for "simulating" (rendering) our React app / components.
+
+For Asserting, we use 'Jest'
+For Simulating, we use 'React Testing Library'
+Both these tools are already there and installed and setup when you are using 'create-react-app'.
+
+---Writing first Test for a component---
+
+🍾Convention: Write the test as close as possible to the thing you want to test.
+
+✅The file name for writing the test follows below convention:
+	ComponentName.test.js
+
+✅To write a test:
+	- we write the test in a function 'test()' which is globally available (you don't need to import it).
+
+	test('description_here', anonymous_function);
+
+
+description_here: describes what your test does.
+anonymous_function: Contains the code to test your component. Here, normally we do 3 things (3 A's):
+
+1️⃣	Arrange: Set up the test data, test conditions and test environment (basically render)
+
+2️⃣ Act: Run logic that should be tested (eg. execute function)
+
+3️⃣ Assert: compare execution results with expected results.
+
+To arrange we use functions like render:
+	render(<Component/>) //takes JSX
+	- It renders the component provided.
+
+To act:
+Can be nothing || Can be alot.
+
+To Assert:
+Check or Compare:
+It utilizes various functions such as screen,expect etc.
+	screen  -> property which has various functions.
+	used to find elements on screen or virtual environment or testing environment. On this there are several functions available for getting the element, querying th elements and much more.
+
+	expect -> function that is globally available to which we can pass our testing result value (nu,ber, string, DOM node, .etc)
+	 -> It also has various methods and properties which van be used to check our result such as 'toBeChecked' and etc.
+	
+🏃‍♂️For running the tests:
+
+✅There is a script declared inside your package.json:
+	> npm test
+	-> provides a menu which can be used to run tests, run failed tests, run all tests, run test by name and much more. It runs a watcher which can be used to check whether a test succecced on save or not.
+
+---Test Suits or Tests---
+As your application grows,
+
+you typically will have dozens
+
+or maybe hundreds or thousands of tests
+
+and to organize and group those different tests,
+
+you often organize them into different testing suites.
+For example, all the tests, belonging to one feature,
+
+or one component of your application,could be grouped into one testing suite,
+
+
+Such a testing suite can be created using a global function:
+
+	describe('description_here', anonymous_function)
+
+description_here: Description of category to which the different tests will then belongs.
+anonymous_function: here you dont write the test itself but you put different test functions that are needed to be put together.
+
+---------Testing User Interations and State---------
+Try to write all the possible cases that can be there, for Exapmle if checing something related to 'button', then check whether before the button click and after the click.
+
+We need to add thhe user interaction in 'add', to create the code for 'ACT' we have another package installed by the 'create-react-app' namely 'user-event' 
+
+✅ import the userEvent from the 'user-event' package.
+	import userEvent from '@testing-library/user-event'
+
+userEvent -> it is an object that help us trigger user event in the virtual screen.
+	example: userEvent.click(Element);
+	Element on which you want to simulate click.
+'Now assert after click thing.'
+
+----Testing Connected Tests-----
+The tests simply continue to work if we use a component which has a dependency of another compoent a.k.a connected components (for example: a component which in turn uses another component)
+
+This is happened because, render() function renders the entire component tree.
+
+Technically, we can call this an integration test. (more than one unit / component is involved);
+
+----Testing Asynchronous Code----
+Since most of the asynchronous tasks take time to execute we can't test them immediately before execution.
+
+Workaround: 
+You can use 'find' queries on screen as a property, as these will return promises and react-testing-library will basically re-evaluate the screen a couple of times untill this succeeds.
+
+'find' also contains various parameters to specify timeout for the test (by default it is 1s).
+
+Test runners (anonymous_function) can be async functions
+your test here can actually return a promise and then jest, test runner, will wait for this promise to resolve. So, it will wait until your test is already done.
+
+----Working with Mocks----
+Mock functions allow you to test the links between code by erasing the actual implementation of a function, capturing calls to the function (and the parameters passed in those calls), capturing instances of constructor functions when instantiated with new, and allowing test-time configuration of return values.
+
+There are two ways to mock functions: Either by creating a mock function to use in test code, or writing a manual mock to override a module dependency.
+
+   --  Using a mock function
+Let's imagine we're testing an implementation of a function forEach, which invokes a callback for each item in a supplied array.
+
+ - forEach.js
+	export function forEach(items, callback) {
+		for (let index = 0; index < items.length; index++) {
+			callback(items[index]);
+		}
+	}
+
+To test this function, we can use a mock function, and inspect the mock's state to ensure the callback is invoked as expected.
+
+forEach.test.js
+	const forEach = require('./forEach');
+
+	const mockCallback = jest.fn(x => 42 + x);
+
+	test('forEach mock function', () => {
+		forEach([0, 1], mockCallback);
+
+		// The mock function was called twice
+		expect(mockCallback.mock.calls).toHaveLength(2);
+
+		// The first argument of the first call to the function was 0
+		expect(mockCallback.mock.calls[0][0]).toBe(0);
+
+		// The first argument of the second call to the function was 1
+		expect(mockCallback.mock.calls[1][0]).toBe(1);
+
+		// The return value of the first call to the function was 42
+		expect(mockCallback.mock.results[0].value).toBe(42);
+	});
+
+
+When we run our tests which we typically do a lot during development, we generally don't wanna send Http requests to our servers.
+
+We don't wanna send requests because 
+ - that will cause a lot of network traffic.
+ - if you are not fetching data but you have some Component that sends a post request to a server, your tests might start inserting data into a database or they might start changing things on the server.
+
+when we write tests is, we either don't even wanna send a real request or we wanna send it to some fake server.
+Vaible approach will be to go with "You dont wanna send a real request"
+
+when you write a test you don't wanna test code, which you haven't written (For example: fetch(), console.log(), .etc).
+Instead, all you want is that the component behaves correctly.
+
+For More Info about Jest(javascript Tester Tool): 
+https://jestjs.io/docs/getting-started
+
+For More Info about React Testing Library:
+https://testing-library.com/docs/react-testing-library/intro/
