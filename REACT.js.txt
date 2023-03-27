@@ -149,7 +149,7 @@ We suggest that you begin by typing:
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<App />);
 
- -> App.js -> Contains a function named App and we then export this function and inside this function we return some HTML code which wrapped inside (parenthesis) (not regularly see, not a valid JS code) -> this is a JSX (special feature invented by th e react team and it works in JS files because of the transformation steps SRC -> PUBLIC (index.html));
+ -> App.js -> Contains a function named App and we then export this function and inside this function we return some HTML code which wrapped inside (parenthesis) (not regularly see, not a valid JS code) -> this is a JSX (special feature invented by the react team and it works in JS files because of the transformation steps SRC -> PUBLIC (index.html));
 
 
 'public'
@@ -172,21 +172,12 @@ JSX -> JAVASCRIPT AND XML (HTML == XML) and it works in JS files as because of t
 
 In older React Projects you need to (import React from 'react') in all your components files, to be precise you need it where you write JSX code.
 
-
-JSX code is just Syntactic Sugar under the hood its actually transformed to methods called on the React Object. That's we need to import it in the past.
+JSX code is just Syntactic Sugar under the hood its actually transformed to methods called on the React Object. That's why we need to import it in the past.
 
  -> return React.createElement() -> is called when we create JSX, this function takes 3 arguments:
 	1. Element which should be created (in string if built-in), if custom-component then point at the import name which is at above of the file and without string.
 	2. Object that has attributes to above specified Element
-	3. Content between opening and closing tags
-	4
-	5
-	.
-	.
-	.
-	.
-	.
-	jitne elements hai between opening and closing tags of (1) element
+	3. Content between opening and closing tags (elements or anything)
  
 In previous versions the following JSX the code Which is this:
 	return(
@@ -195,7 +186,9 @@ In previous versions the following JSX the code Which is this:
 			<ExpenseItems items = {expenses}/>
 		</div>
 	);
-will look like this:
+
+ - will look like this:
+
 	return React.createElement(
 		'div',
 		{},
@@ -211,7 +204,7 @@ It is a good practice to actually putting these new components into new files so
 IN THE 
 	->SRC folder add
 		-> COMPONENTS FOLDER
-			-> here add the components source file
+			-> here add the components source file (js and css)
 
 NOTE : Don't move App.js as it is a special kind of component, you can move it but its not considered generally.
 
@@ -231,11 +224,11 @@ Here Only the top most i.e <App/> is rendered into single HTML Page. All The oth
 
 --------------How is a Component Written in REACT?----------------
 
-1. -> Its just a Javascript Function (Special Kind of function), special due to its return structure.
+Its just a Javascript Function (Special Kind of function), special due to its return structure.
 
-2. -> We need to create a filename by name of the Component (inside src Folder ) AS (ComponentName.js, Naming convention <3 ONLY)
+1️⃣We need to create a filename by name of the Component (inside src Folder ) AS (ComponentName.js, Naming convention <3 ONLY)
  
-3. -> Inside it write a normal function as -> 
+2️⃣Inside it write a normal function as:
 	
 	function ComponentName(){
 		return (
@@ -243,17 +236,18 @@ Here Only the top most i.e <App/> is rendered into single HTML Page. All The oth
 		);
 	}
 
-4. -> and to use it we need to export it. otherwise it will be usable only in that file only.
+3️⃣To use it we need to export it. otherwise it will be usable only in that file only.
 	
 	export default ComponentName;
 
-5. ->  we can import it in any file we like, Its recommended to import it in App.js component file.
+4️⃣We can import it in any file where we need to render it.
 
 	import ComponentName from './components/ComponentName'; 
 
 (JS knows that it will be js file as it will first search a js file named 'ComponentName');
 
-6. -> <ComponentName></ComponentName> 
+5️⃣To use it after importing
+	<ComponentName></ComponentName> 
 		(In the JSX-CODE)
 
 NOTE: 1. (IMPORTANT!) Its important to name the component starting with a capital letter as REACT distinguish between custom_components and inbuilt HTML ELEMENTS
@@ -270,7 +264,7 @@ you can write it as a Single closed tag -> (just like hr, br, img etc);
  -> import that file into the ComponentName for which you wrote that CSS code.
 		By importing that You are telling the build process to consider the file as well;
 
-NOTE : class = className
+NOTE : class = className (Regular HTML vs JSX)
 
 --------------------Dynamic Data-------------------
 To Enter data that you get from anywhere before return the JSX,
@@ -282,7 +276,7 @@ So between these curly braces you can run basic javascript expression.
 
 				<h2> {1 + 3} </h2>
 
-----------------------PropS-----------------------
+----------------------Props-----------------------
 We can make our components reusable, by using parameters and a concept called PROPS in react.
 
 We can pass data from a parent component to its child components.
@@ -309,9 +303,9 @@ EG: 	function Car(props) {
 
 If you have a variable to send, and not a string as in the example above, you just put the variable name inside curly brackets {}
 
-Note: React Props are read-only! You will get an error if you try to change their value. We can't send object as a prop item like (new Date(2012,5,23));
+Note: React Props are read-only! You will get an error if you try to change their value.
  
- - prop parameter is in the function
+To utilize the props add them into the function parameter, and use the attributes which were passed to that element. (eg: props.name , props.car etc.)
 
 -------------- Splitting Components---------------
 Every Component is focused on one task (that can't be broken into more simpler code), and thats why react is component focused we can assign the component a task.
@@ -319,16 +313,17 @@ Every Component is focused on one task (that can't be broken into more simpler c
 ----------------Composition----------------
 Building a UI from small components piece by piece is called as Composition.
 
-Note: You can't use your custom components as wrappers around other kind of content (having content between opening and closing tags doesnt work for custom components as it work for built in html elements)
-and for that to we work we have one special prop that is built in the react (To build resuable wrapper components)
-   -> props.children
-for example -> 
+Note: You can't use your custom components as wrappers around other kind of content (having content between opening and closing tags doesnt work for custom components as it work for built in html elements), let's say you want an custom component like <div> so that you can hold elements, so by doing nothing it will not show anything  inside that and for that to we work we have one special prop that is built in the react (To build resuable wrapper components)
+   
+	props.children
+	
+for example: 
     <div>{props.children}</div>
+
 {props.children} -> PlaceHolder for the content that is inside the component or we can use this inside a wrapper div
 
-But Remember only default HTML tags support 'className', not the custom components
-
-we can dynamically add classes to the custom components
+IMPORTANT! : ⚠️
+Only default HTML tags support 'className', not the custom components, we can dynamically add classes to the custom components
 
 ------------------Organizing Component Files---------------------
 
@@ -377,65 +372,63 @@ Instead we just use these functions like HTML ELEMENTS in the JSX Code.
 
 Under the hood this is almost (above) like a function call. By using our components in JSX code, We make React aware of our component functions.
 
-Whenever react evaluates this JSX code, it will call these component functions. And these component functions stand to return JSX code, which is all the evaluated, up until there's no more JSX code to be evaluated. So react keeps on calling any component functions it encounters in JSX, then calls any functions that those functions might have returned so any elements those components might have used in their JSX code until there are no more functions left.
+Whenever react evaluates this JSX code, it will call these component functions and these component functions stand to return JSX code, which is first of all evaluated, up until there's no more JSX code to be evaluated. So react keeps on calling any component functions it encounters in JSX, then calls any functions that those functions might have returned so any elements those components might have used in their JSX code until there are no more functions left.
 Then it re-evaluates the overall result and translates that into DOM instructions which renders something like this on the screen. That's how react works.
 
 It's all started by the index.js file, Where we initially point at App component, That's the first component function which is being called and that happens when the react app is been loaded on the screen which happens when the page is been visited.
 
 Example:
-REFER REACT-DEV, The Following Components (Expense Tracker) So in the case of expenseItems.js, if react encounters this expense item, it calls this expense item component function, executes all the code in there, encounters this JSX code and calls this card function and the expenseDate function and then it goes through the JSX code of this components until there's no more component code left to call and then translates that into DOM instructions which renders.
+REFER REACT-DEV/Expense_Tracker
+So in the case of ExpenseItems.js, if react encounters this expense item, it calls this ExpenseItem component function, executes all the code in there, encounters this JSX code and calls this Card function and the ExpenseDate function and then it goes through the JSX code of this components until there's no more component code left to call and then translates that into DOM instructions which renders.
 
-Problem with that is, that react never repeats that React goes through all of that when the application is initially rendered, but thereafter it's done.
-
-However in modern applications, of course you sometimes want to update what's visible on the screen, for example because a button was clicked and that button should change some text which is being output.
-
-So we need a way of telling react that something changed and that a certain component should be re-evaluated and that's where react introduces a special concept called state.
+Problem with that is, that react never repeats that React goes through all of that when the application is initially rendered, but thereafter it's done. However in modern applications, of course you sometimes want to update what's visible on the screen, for example because a button was clicked and that button should change some text which is being output. So we need a way of telling react that something changed and that a certain component should be re-evaluated and that's where react introduces a special concept called state.
 
 -------------State-------------
 By default, Regular variables are not triggering the re-evaluation of the Component
 
 But if it would revaluated then it gets triggered and the regular varaible can be used to change the JSX or component code.
 
-So To Tell REACT that it should run it again, we need to import something from REACT LIBRARY, IMporting a function called as useState().
+So To Tell REACT that it should run it again, we need to import something from REACT LIBRARY
+
+1️⃣Importing a function called as useState().
 
 	// named import in curly braces {}
- -> import REACT, {useState} from 'react';
+      import REACT, {useState} from 'react';
 
 useState() -> function provided by the react library and this function allows us to define values as state where changes to these values should reflect in the component function being called again.
 
- - It is a React Hook, and all these REACT HOOKS can be recognized by the fact that they start with word 'use' in their name.
+It is a React Hook, and all these REACT HOOKS can be recognized by the fact that they start with word 'use' in their name.
 
- - HOOKS must be called inside the component function and they can't be called outside the component function and not in any nested function inside the component function. (1 Exception is there)
-
-
- - useState wants a default state value, because with useState we basically create a special kind of variable. A variable where changes will lead the component function to be called again. And Of course we can therefore assign an initial value for that special variable (INITIALIZATION) and we pass this initial value as a paramter to useState()
+ - useState wants a default state value, because with useState we basically create a special kind of variable. A variable where changes will lead the component function to be called again and we can therefore assign an initial value for that special variable (INITIALIZATION) and we pass this initial value as a paramter to useState()
  
  - This useState() returns something, It gives us access to this special variable, however it not just only return that access BUT also it returns a function that we can then call to assign a new value to that variable.
 
  - useState() actually returns an array, Where the first value is the variable itself, the second value is that updating function, we can call this function to set that variable.
 
- - we can only do it inside the component function -
-Ex:
-	const ExpenseItem = (props) => {
-       const [title, setTitle] = useState(props.title);
-	
+IMPORTANT! : ⚠️
+ - HOOKS must be called inside the component function and they can't be called outside the component function and not in any nested function inside the component function. (1 Exception is there)
+ - we can only do it inside the component function
+For Example: 
 
+	const ExpenseItem = (props) => {
+       	const [title, setTitle] = useState(props.title);
 	}
-- title is the value that we can use in JSX CODE
-- New Value is assigned by the setTitle function, pass a new value to this function, and calling this function does'nt only assign a new value to the variable, but its managed by REACT somewhere in memory and we call this state updating function.
+
+- "title" is the value that we can use in JSX CODE
+- New Value is assigned by the "setTitle" function, pass a new value to this function, and calling this function does'nt only assign a new value to the variable, but its managed by REACT somewhere in memory and we call this state updating function.
 
 - The special variable will not just recieve a new value but the component function in which you called this state updating function will be executed again.
+
 (That is what we need, we want to call the component function again when our state changes), by calling this state updating function, you're telling REACT that you wanna assign a new value to this state and that then tell REACT that the component in which this state was registered with useState should be re-evaluated. And therefore React will go ahead and execute this component function again.
 
- - This state updating function actually doesn't change the value right away, but instead schedules this state update. So, its not available rightaway
-
-That's How React State works and this is the keyConcept, 
+ - This state updating function actually doesn't change the value right away, but instead "schedules this state update". So, its not available rightaway.
 If you have data, which might change, and where changes to that data should be reflected on the user interface then you need state because a regular variables will not do the trick with state, however you can set and change values and when they do change, React will re-evaluate the component in which the state was registered and only that component, by the way not any other components, just this component in which this state was registered.
 
 ---------Closer Look at useState()-----------
-UseState registers some State, So some value as a state for the component in which it is being called and To be more precise here, It registers it for a specific component instance.
+"useState" registers some State, So some value as a state for the component in which it is being called and To be more precise here, It registers it for a specific component instance (every instance got its own slice for useState).
 
-For Example in REACT-DEV, under Expense Tracker project, we have used expenseItem component 3 times. Now every component item recieves its own seperate State which is detached from other states. We have 1 function defination of the component, but we are calling it 3 times and every time it's called, a new separate State is created of course in the same way, but managed independently by React. If the state of one indiviuals changes , others remain intact. So, We have seperate states, even if we create a component more than once. (CRUICAL and GOOD to have). 
+For Example:
+In REACT-DEV/ExpenseTracker, we have used expenseItem component 3 times. Now every component item recieves its own seperate State which is detached from other states. We have 1 function defination of the component, but we are calling it 3 times and every time it's called, a new separate State is created of course in the same way, but managed independently by React. If the state of one indiviuals changes , others remain intact. So, We have seperate states, even if we create a component more than once. (CRUICAL and GOOD to have). 
 
 If you add a console.log() in a component function itself, this will be called whenever the component function is being executed.
 
@@ -444,8 +437,7 @@ Short Summary of above:
 
 	const [title,setTitle] = useState(props.title)
 
-- By calling useState, we tell react that it should manage some value for us. We never see that variable itself.
-So we therefore just call a function. we don't assign a new value to the variable again.
+- By calling useState, we tell react that it should manage some value for us. We never see that variable itself. So we therefore just call a function. we don't assign a new value to the variable again.
 How it gets the new VALUE? -> Every time we call the update function, component code executed again with new value for the variable, React will not reinitialize the State. Instead, it will detect that this State had been initialized in the past, and it will just grab the latest State which is based on some State update(we always get a brand new snapshot).
 
 The State adds reactivity to our application, Without state our UI would never change. But with State and with listening to events, we can make sure that we can react to user input and that such input can result in a visible change on our screen.
@@ -505,8 +497,8 @@ The app component in our application has access to both the new expense and the 
 
 -----Controlled and Uncontrolled Components-------
 
-Controlled Components -> Whenever you use 2 way binding, you are controlling a component
-value and changes are not handled in the components itself, but in the parent component.
+Controlled Components -> Whenever you use 2 way binding, you are controlling a component 
+Value and changes are not handled in the components itself, but in the parent component.
 
 Presentational components vs Statefull components,
 stateless versus statefull components or dumb vs smart components
@@ -539,10 +531,8 @@ NOTE: Whenever you get this warning! ->
 "Each child in a list should have a unique "key" prop."
 
 It is Because React see some items almost similar inside a DIV (which is using some state variable to update the componented, when we add a new item in that DIV BLOCK
-) when we add a new item in that DIV BLOCK
-is that, React renders this new item as the last item in this list of div's and updates all items and replace their content, such that it again matches the order of the items in my Array and this is not great.
-
-This is happening because to React all these items look similar and it only sees that my Array changed that it's now longer than before and hence it simply renders an additional div and it adds that at the end and then it simply walks through all the items and updates the content inside of every item to match the Array content again.
+)
+React renders this new item as the last item in this list of div's and updates all items and replace their content, such that it again matches the order of the items in my Array and this is not great. This is happening because to React, All these items look similar and it only sees that my Array changed that it's now longer than before and hence it simply renders an additional div and it adds that at the end and then it simply walks through all the items and updates the content inside of every item to match the Array content again.
 
 The final result, therefore is correct here but from a performance perspective this is not great because all items are visited and updated and it can even lead to bugs. (statechanges could be lost inside component which was inside that array due to overwritten of the component)
 
@@ -551,10 +541,7 @@ Why REACT behave like this? -> Because it has no other way
 It currently simply checks the length of the Array and then has a look at the number of items that were already rendered. The individual items all look similar to React though so it can't know where a new item should be added. That's why we get this warning
 
 IMPORTANT! : ⚠️
-We have a way of telling react where a new item it should be added and we do that by going to the place where we output our list of items. We add a special PROP to that item there (Key), it will help REACT to identify indiviual items (key should be a unique ID) (You can also use, index item (available in MAP as second argument) for special key) 
-
-You can use useState hook to update the component once we add a new item to that list.
-
+We have a way of telling react where a new item it should be added and we do that by going to the place where we output our list of items. We add a special prop to that item there (Key), it will help REACT to identify indiviual items (key should be a unique ID) (You can also use, index item (available in MAP as second argument) for special key).
 
 ------------------Conditional Content--------------------
 We can't use long statements or flow EG: FOR , IF ELSE etc inside {}, But we can use ternary operator inside {}.
@@ -584,9 +571,9 @@ Else You can use camelCasing
 
 ----Setting Dynamic Inline Styles----
 
-we can add styles based on states of the component, by using ternary operator
+We can add styles based on states of the component, by using ternary operator
 
-Example: 
+For Example: 
 <label style={{color:isValid ? 'black':'red'}}>Course Goal</label>
 <input style={{borderColor:isValid?'black':'red', background:isValid ? 'black': 'salmon'}} type="text"/>
 
@@ -600,9 +587,7 @@ Example:
 			here isValid is the state of the component
 
 IMPORTANT! : ⚠️
-This is not scoped to that component (It applies the rules to global codebase), that's why we dont prefer to use it, Only thing is that you need to be carefull, while using it
-
-
+This is not scoped to that component (It applies the rules to global codebase), that's why we dont prefer to use it, Only thing is that you need to be carefull, while using it.
 There are problems with this approach of spilling styles to other components.
 
 -----Styled Components-----
@@ -656,9 +641,8 @@ export default Button;
 
 ----Styled Componenets & Dynamic Props----
 
-The styled components, so the components returned by these styled components functions, forward all props you set on them to the underlying components, so to the underlying div here.
-
-We can use Props in the styled components where we can specify what we need to
+The styled components, so the components returned by these styled components functions, forward all props you set on them to the underlying component.
+We can use Props in the styled components where we can specify what we need to add.
 we can write props in tagged template literal as 
 
 Example : 
@@ -748,10 +732,10 @@ After downloading you will get 2 tabs in Chrome Devtools:
 		- We can also see hooks attached to a component, change the hooks (particulary state hook)
 
 	- Profiler
-
-
+		- The Profiler tab allows you to record performance information.
 
 ------Section 9: Working with Fragments, Refs etc.🧨---------
+
 			------JSX LIMITATION-------
 If we have adjacent root level JSX elements like in this example:
 	return (
@@ -864,7 +848,7 @@ return (
 	<>
 		// This line ports the element (first argument) to the container element which is the second argument of the createPortal function.
 
-	  {ReactDOM.createPortal(React node that should be render in JSX ,  pointer to that container where this previous node shoud be render we need to select that element by DOM API (document.getelement......))}
+	  {ReactDOM.createPortal(React node that should be render in JSX ,  pointer to that container where this previous node shoud be render we need to select that element by DOM API (document.getElement......))}
 	</>
 )
 
@@ -887,7 +871,7 @@ Avoid using refs for anything that can be done declaratively.
 For example, instead of exposing open() and close() methods on a Dialog component, pass an isOpen prop to it.
 
 ⚠️Don’t Overuse Refs
-Your first inclination may be to use refs to “make things happen” in your app. If this is the case, take a moment and think more critically about where state should be owned in the component hierarchy. Often, it becomes clear that the proper place to “own” that state is at a higher level in the hierarchy. See the Lifting State Up guide for examples of this.
+Your first inclination may be to use refs to “make things happen” in your app. If this is the case, take a moment and think more critically about where state should be owned in the component hierarchy. Often, it becomes clear that the proper place to “own” that state is at a higher level in the hierarchy.
 
 
 ✅To Create a Ref we need to import a hook ->
@@ -911,7 +895,7 @@ Example:
 	);
 
 	--Working of Ref--
-Accod to above code, now a connection will be established. The first time React reaches this code and renders this code, it will actually set the values stored in nameInputRef to the native DOM element that is rendered based on this input.
+Accod to above code, a connection will be established. The first time React reaches this code and renders this code, it will actually set the values stored in nameInputRef to the native DOM element that is rendered based on this input.
 
 This ref value, which is being generated here always is an object, which always has a current prop and the current prop holds the actual value that ref is connected with Now, by default, it's undefined but as soon as this code ran, because of this ref prop, the nameInputRef is connected to that input and hence, it's actually the input which is being stored as a value in the current prop and what's being stored here really is the actual DOM node. So not some theoretical value or anything like that but the real DOM node,
 
@@ -926,7 +910,7 @@ And if you only want to read a value and you never plan on changing anything, we
 
 --------Controlled Vs Uncontrolled Components--------
 
-✅Uncontrolled Components: Uncontrolled Components are the components that are not controlled by the React state and are handled by the DOM (Document Object Model). So in order to access any value that has been entered we take the help of refs.
+✅Uncontrolled Components: Uncontrolled Components are the components that are not controlled by the React state and are handled by the DOM (Document Object Model). So, In order to access any value that has been entered we take the help of refs.
 
 For instance, if we want to add a file as an input, this cannot be controlled as this depends on the browser so this is an example of an uncontrolled input.
 
@@ -966,7 +950,7 @@ React library itself has one main job,
 
  - Re-evaluate Component upon State and Prop Changes 
 
-Side effects are everything else that might be happening in your application and a good example here is sending a Http request or storing something in browser storage. In local storage for example. But you could also think about timers or intervals which you set in your code.
+Side effects are everything else that might be happening in your application and a good example here is sending a Http request or storing something in browser storage.For example, Local Storage, But you could also think about timers or intervals which you set in your code.
 
 These are all tasks which you of course often have to consider in your application but these tasks are all not related to bringing something onto the screen, at least not directly.
 
@@ -1076,7 +1060,7 @@ Well, the trick is that we actually save the timer and for the next keystroke, w
 
 -------------useReducer Hook🪝--------------
 
-Sometimes, you have more complex state - ForExample if it got miltiple states, multiple ways of changing it or dependencies to other states.
+Sometimes, you have more complex state - ForExample if it got multiple states, multiple ways of changing it or dependencies to other states.
 
 In such cases useState() then often becomes hard ot error-prone to use - it's easy to write inefficient or buggy code in such scenarios.
  
@@ -1100,10 +1084,12 @@ const [state, dispatchFn] = useReducer(reducerFn, initialArgs, initFn);
 ✅To use it, we need to import it first:
    import React, {useReducer} from 'react';
 
-🔁 Re-watch 117: useReducer & useEffect
+For Example:
+	Best Example:
+	https://www.freecodecamp.org/news/usereducer-hook-react/
 
------------------------------------------
-🤐 useState VS useReducer
+-----------🤐 useState VS useReducer-----------
+
 🧱 -> useState()
 	- The main state management "tool"
 	- Great for independent pieces of state/data
@@ -1147,7 +1133,9 @@ To establish it:
 4️⃣ write this line:
 
 	//Context -> App or Component wide State
+⏩
 		React.createContext(parameter);
+
 	//parameter -> often it is an object
 
     //It will return a component or an object
@@ -1164,20 +1152,20 @@ The created context is an object with two properties: Provider and Consumer, bot
 
  - Create context using the createContext method.
  - Take your created context and wrap the context provider around your component tree.
- - Put any value you like on your context provider using the value prop.
+ - Put any value you like on your context provider using the "value" prop.
  - Read that value within any component by using the context consumer.
 
  🤐 Read More About:
 	https://www.freecodecamp.org/news/react-context-for-beginners/
 
-For the second part, that is the listening part (to get access to our value), and we can listen in two ways.
+For listening part (to get access to our value), and we can listen in two ways.
 
 1️⃣ - by using Context consumer
 2️⃣ - by using a React Hook. (Mostly Used!)
 
 1️⃣ By first way we need to wrap the component where we want to use the Context Value:
 
-wherever we want to consume (or use) what was provided on our context, we use the consumer component Context.Consumer, To use our passed down value, we use what is called the "render props pattern". It is just a function that the consumer component gives us as a prop. And in the return of that function, we can return and use value.
+wherever we want to consume (or use) what was provided on our context, we use the consumer component Context.Consumer, To use our passed down value, we use what is called the "render props pattern". It is just a function that the consumer component gives us as a prop and in the return of that function, we can return and use value.
 
 <Context.Consumer>
  ... Here we write a function to which we got argument which has the context data (object which we created in beginning).
@@ -1209,12 +1197,13 @@ We can pass anything from functions to values,.... strings etc.
 		onLogout: ()  => {},
 		onLogin: () => {}
 	});
+
 	//custom Provider Function
 	const AuthContextProvider = (props) => {
 		//Can be used to bind entire logic
+
 		const [isLoggedIn, setIsLoggedIn] = useState(false);
-		
-		
+				
 		useEffect(() => {
 			const storedUserLoggedInInformation = localStorage.getItem('isLoggedIn');
 			if(storedUserLoggedInInformation === '1'){
@@ -1249,17 +1238,105 @@ Now you can use this AuthContextProvider component and wrap it over your App Com
 
  ----------------Rules of Hooks------------------
 
- 1️⃣ Only Call React Hooks in React Functions, and in Custom Hooks.
+1️⃣ Only Call React Hooks in React Functions, and in Custom Hooks.
 
- 2️⃣ Only call React Hooks at the TOP LEVEL
+2️⃣ Only call React Hooks at the TOP LEVEL
 	 - Don't call them in Nested Functions
 	 - Don't call them in any Block statements
- 3️⃣ Unofficial Rule for useEffect(): Always add everything you refer to inside of useEffect() as a dependency!
+3️⃣ Unofficial Rule for useEffect(): Always add everything you refer to inside of useEffect() as a dependency!
  
 ----useImperativeHandle Hook-----
-Forward Ref's
+useImperativeHandle is a React Hook that lets you customize the handle exposed as a ref.
 
-🔁 Rewatch 128: Diving into 'Forward Refs'
+Functional Components cannot be given refs.
+It allows us to use this Component or functionalities from inside this Component imperatively, which simply means not through the regular state props management, not by controlling the Component through state in the parent Component, but instead by directly calling or manipulating something in the Component programmatically.
+
+	useImperativeHandle(ref, createHandle, dependencies?)
+
+	import { forwardRef, useImperativeHandle } from 'react';
+
+	const MyInput = forwardRef(function MyInput(props, ref) {
+		//the ref which we are passing is the ref that we want to access from outisde, used for establishing the connection 
+		const inputRef
+  		useImperativeHandle(ref, () => {
+    			return {
+      		// ... your methods ...
+    			};
+  		}, []);
+  // ...
+🙅Parameters 
+1️⃣ref: The ref you received as the second argument from the forwardRef render function.
+
+2️⃣createHandle: A function that takes no arguments and returns the ref handle (an object which contains the data that you want to use from outside of that component) you want to expose. That ref handle can have any type. Usually, you will return an object with the methods you want to expose.
+
+3️⃣optional dependencies: The list of all reactive values referenced inside of the createHandle code. Reactive values include props, state, and all the variables and functions declared directly inside your component body.
+
+Now, if the parent component gets a ref to MyInput, it will be able to call the focus and scrollIntoView methods on it. However, it will not have full access to the underlying <input> DOM node.
+
+Example: 
+
+//App.js
+import { useRef } from 'react';
+import MyInput from './MyInput.js';
+
+export default function Form() {
+  const ref = useRef(null);
+
+  function handleClick() {
+    ref.current.focus();
+    // This won't work because the DOM node isn't exposed:
+    // ref.current.style.opacity = 0.5;
+  }
+
+  return (
+    <form>
+      <MyInput label="Enter your name:" ref={ref} />
+      <button type="button" onClick={handleClick}>
+        Edit
+      </button>
+    </form>
+  );
+}
+
+//MyInput.js
+import { forwardRef, useRef, useImperativeHandle } from 'react';
+
+const MyInput = forwardRef(function MyInput(props, ref) {
+  const inputRef = useRef(null);
+
+  useImperativeHandle(ref, () => {
+    return {
+      focus() {
+        inputRef.current.focus();
+      },
+      scrollIntoView() {
+        inputRef.current.scrollIntoView();
+      },
+    };
+  }, []);
+
+  return <input {...props} ref={inputRef} />;
+});
+
+export default MyInput;
+
+
+
+----------⏩React.forwardRef--------
+The forwardRef method in React allows parent components to move down (or “forward”) refs to their children. ForwardRef gives a child component a reference to a DOM entity created by its parent component in React. This helps the child to read and modify the element from any location where it is used.
+
+❓😳How does forwardRef work in React?
+
+In React, parent components typically use props to transfer data down to their children. Consider you make a child component with a new set of props to change its behavior. We need a way to change the behavior of a child component without having to look for the state or re-rendering the component. We can do this by using refs. We can access a DOM node that is represented by an element using refs. As a result, we will make changes to it without affecting its state or having to re-render it.
+
+When a child component needs to refer to its parent’s current node, the parent component must have a way for the child to receive its ref. The technique is known as ref forwarding.
+	
+	React.forwardRef((props, ref) => {})
+
+Parameters: It takes a function with props and ref arguments.
+
+Return Value:  This function returns a JSX Element.
+
 
 ------------Section 12: A Look Behind the scenes of React & Optimization Techniques🎬-------------
 
@@ -1451,7 +1528,7 @@ That's why this function form is helpful because there React will actually ensur
 
 if you have two state updates in the same synchronous code snippet after each other (in the same function), for example, where nothing in between would cause a time delay or anything like that. In such cases, React will batch those state updates together.
 
-For Exapmle:
+For Example:
 In one long synchronous process, so for example, in one function that executes start to end without any callbacks or promises in between, in such cases React will take all the state updates that are produced by that function and it will batch them together into one state update.
 
 ----------------useMemo() Hook🪝-------------------
@@ -1586,7 +1663,7 @@ componentWillUnmount() -> called right before component is unmounted (removed fr
 	}
 },[] )
 
--------Class-Based Components and Context--------
+-------🎒Class-Based Components and Context--------
 Only the data-using part changes as we can' t use React Hooks (particulary useContext), else remains the same, providing the data using provider and all.
 
 We Have two Ways.
@@ -1594,7 +1671,7 @@ We Have two Ways.
 	-> which is shown in the Context API part.
 
 
-There is no PERFECT QUIVALENT METHOD!
+There is no PERFECT EQUIVALENT METHOD!
 2️⃣ A static property named as contextType which is used to access the context data. It can be utilized by using this.context. This method, however, limits your consumption, only one context at a time.
 
 	static contextType = ContextName;
