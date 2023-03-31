@@ -1352,8 +1352,7 @@ React Only cares about the components (RealDOM - what user see), props (Data fro
 whenever props, state or context changes, components that use these concepts are updated by React and React checks whether this component now wants to draw something new onto the screen and if that should be the case, React will let ReactDOM know about that so that ReactDOM is able to bring that new screen.
 
 ❓How Exactly Does all that work?
-React is concerned about components and what React in the end does is, it uses a concept called the virtual DOM. It determines how the component tree, which your app is building in the end, and every component itself, of course, has a sub tree, that JSX code returned by that component.
-It determines how that component tree currently looks like and what it should look like, for example, after a state update and that information is then handed off to ReactDOM which now knows about the differences and which then knows how it should manipulate the real DOM to match that virtual DOM (that virtual snapshot React derived)
+React is concerned about components and what React in the end does is, it uses a concept called the virtual DOM. It determines how that component tree currently looks like and what it should look like, for example, after a state update and that information is then handed off to ReactDOM which now knows about the differences and which then knows how it should manipulate the real DOM to match that virtual DOM (that virtual snapshot React derived)
 
 whenever state props, or a context of a component changes, that component function is re-executed, that component is re-evaluated by React.
 
@@ -1363,13 +1362,9 @@ Re-evaluating a component is not same as re-rendering the DOM. So just because a
 Now the real DOM on the other hand is only updated in the places where it needs to be changed based on that difference React derived between the previous state of a component and its tree and the current state after the state prop or context change.
 
 So the real DOM is not changed all the time. It's changed rarely and only when needed. And that's important for performance. Because making a virtual comparison between the previous state and the current state, that's fairly cheap and easy to do and that happens only in memory. Reaching out to the real DOM, (that's rendered in the browser)
-is pretty expensive from a performance perspective, because working with the real DOM just turns out to be a performance intensive task. 
-Ofcourse not a tiny change in one place, but if you do that tiny change in a lot of places all the time, then your page might become slow because you're working with the real DOM too much.
-And that's why React has this structure of doing virtual comparisons with that virtual DOM  and then only passing the changes between your last snapshot and the current snapshot to the real DOM.
+is pretty expensive from a performance perspective, because working with the real DOM just turns out to be a performance intensive task. Ofcourse, not a tiny change in one place, but if you do that tiny change in a lot of places all the time, then your page might become slow because you're working with the real DOM too much and that's why React has this structure of doing virtual comparisons with that virtual DOM  and then only passing the changes between your last snapshot and the current snapshot to the real DOM. That's how React works.
 
-That's how React works.
-
-🤐Virtual DOM diffing
+---🤐Virtual DOM diffing---
 Finding out the difference between two snapshots.
 
 Example: 
@@ -1387,8 +1382,7 @@ all of a sudden we want to show a new paragraph
 	  🔁<p>This is new!</p>
 	</div>
 
-In this case, React would determine that the difference between both snapshots is this p tag and it would report does change to ReactDOM 
-so that ReactDOM can update the real DOM and insert this paragraph. ReactDOM would not re-render the entire DOM. It would not touch this existing h1 or div element. It would only insert the paragraph after the h1 element inside of the div.
+In this case, React would determine that the difference between both snapshots is this p tag and it would report the change to ReactDOM. So, that ReactDOM can update the real DOM and insert this paragraph. ReactDOM would not re-render the entire DOM. It would not touch this existing h1 or div element. It would only insert the paragraph after the h1 element inside of the div.
 
 IMPORTANT! : ⚠️
 -> All  JSX elements in the end are like function calls to the respect of component functions.
@@ -1397,9 +1391,7 @@ If the parent component function runs again of course the child component functi
 -> if a component is re-executed all its child components will also be re-executed and re-evaluated.
 
 🫣🤐❓isn't this bad?
-Well, this certainly costs some performance. Of course, we got ongoing function executions. We got a virtual comparison. It's needless to say that React is highly optimized for those executions and comparisons.
-
-But we can as a developer can tell React that it should only re-execute a component under certain circumstances and those circumstances would be that the props, which the component received, changed!
+Well, this certainly costs some performance. Of course, we got ongoing function executions. We got a virtual comparison. It's needless to say that React is highly optimized for those executions and comparisons. But we can as a developer can tell React that it should only re-execute a component under certain circumstances and those circumstances would be that the props, which the component received, changed!
 
 React.memo(); -> it can help here
 wrap the component function returned value to it, can be done while exporting it:
@@ -1502,18 +1494,17 @@ useCallback is a React Hook that lets you cache/save/store a function definition
 
 Call useCallback at the top level of your component to cache a function definition between re-renders:
 
-fn: The function value that you want to cache. It can take any arguments and return any values. React will return (not call!) your function back to you during the initial render. On subsequent renders, React will give you the same function again if the dependencies have not changed since the last render. Otherwise, it will give you the function that you have passed during the current render, and store it in case it can be reused later. React will not call your function. The function is returned to you so you can decide when and whether to call it.
+1️⃣fn: The function value that you want to cache. It can take any arguments and return any values. React will return (not call!) your function back to you during the initial render. On subsequent renders, React will give you the same function again if the dependencies have not changed since the last render. Otherwise, it will give you the function that you have passed during the current render, and store it in case it can be reused later. React will not call your function. The function is returned to you so you can decide when and whether to call it.
 
-Dependencies: The list of all reactive values referenced inside of the fn code. Reactive values include props, state, and all the variables and functions declared directly inside your component body.The list of dependencies must have a constant number of items and be written inline like [dep1, dep2, dep3]. React will compare each dependency with its previous value using the Object.is comparison algorithm.
+2️⃣Dependencies: The list of all reactive values referenced inside of the fn code. Reactive values include props, state, and all the variables and functions declared directly inside your component body.The list of dependencies must have a constant number of items and be written inline like [dep1, dep2, dep3]. React will compare each dependency with its previous value using the Object.is comparison algorithm.
 
 IMPORTANT! : ⚠️
-A component might get removed, and in that case, if it's then later reattached, a new state would be initialized. But as long as a component stays attached to the DOM, state is only updated after that first initialization.
+A component might get removed, and in that case, if it's then later re-attached, a new state would be initialized. But as long as a component stays attached to the DOM, state is only updated after that first initialization.
  - same is true for useReducer
 
-State Updates and State Scheduling:
+------State Updates and State Scheduling------
 
-Calling state updating functions in general schedules a state update. React is aware of it, React plans on processing it,
-React doesn't process that immediately though. 
+Calling state updating functions in general schedules a state update. React is aware of it, React plans on processing it, React doesn't process that immediately though. 
 
 Now in reality most of the time, state changes, scheduled state changes will be processed very fast, pretty much instantly. But React reserves the right of actually postponing that state change. React might postpone scheduled state changes.
 
@@ -1523,8 +1514,7 @@ Because of that scheduling where of course you might have multiple outstanding s
 
 That's why this function form is helpful because there React will actually ensure that for every outstanding state change, it looks into the latest state and gives you that and does not use the latest state from the last time the component was re-rendered. That's an important difference between when the component was re-rendered and when a state change was scheduled.
 
-
----------Batching---------
+---------👷‍♂️Batching---------
 
 if you have two state updates in the same synchronous code snippet after each other (in the same function), for example, where nothing in between would cause a time delay or anything like that. In such cases, React will batch those state updates together.
 
@@ -1541,11 +1531,9 @@ Call useMemo at the top level of your component to cache a calculation between r
 
 1️⃣calculateValue: The function calculating the value that you want to cache. It should be pure, should take no arguments, and should return a value of any type. React will call your function during the initial render. On subsequent renders, React will return the same value again if the dependencies have not changed since the last render. Otherwise, it will call calculateValue, return its result, and store it in case it can be reused later.
 
-2️⃣dependencies: The list of all reactive values referenced inside of the calculateValue code. Reactive values include props, state, and all the variables and functions declared directly inside your component body. The list of dependencies must have a constant number of items and be written inline like [dep1, dep2, dep3]. React will compare each dependency with its previous value using the Object.is comparison algorithm.
+2️⃣dependencies: The list of all reactive values referenced inside of the calculateValue code. Reactive values include props, state, and all the variables and functions declared directly inside your component body.
 
-On the initial render, useMemo returns the result of calling calculateValue with no arguments.
-
-During subsequent renders, it will either return an already stored value from the last render (if the dependencies haven’t changed), or call calculateValue again, and return the result that calculateValue has returned.
+On the initial render, useMemo returns the result of calling calculateValue with no arguments. During subsequent renders, it will either return an already stored value from the last render (if the dependencies haven’t changed), or call calculateValue again, and return the result that calculateValue has returned.
 
 IMPORTANT! : ⚠️
 ✅useMemo is a Hook, so you can only call it at the top level of your component or your own Hooks. You can’t call it inside loops or conditions. If you need that, extract a new component and move the state into it.
@@ -1750,7 +1738,8 @@ Fetch API : BUILT into Browsers, allows to send and fetch some data to/from the 
 
 ✅useEffect can be used to do side works like fetching data immediately after the component loads side by side preventing infinite loop; 
 
-----------------Section 15: Building Custom React Hooks-------------------
+----------------Section 15: Building Custom React Hooks🪝-------------------
+------Custom Hooks🪝------
 
 Custom React JS hooks are reusable functions that a React JS software developer can use to add special and unique functionality to the React applications. Usually, if there is a requirement to add a feature, one can install a third-party library and solve the problem. But what if there is no such library with hooks that can be used? This problem is solved by using custom React JS hooks.
 
@@ -1766,15 +1755,15 @@ A custom hook is a special JavaScript function whose name starts with ‘use’ 
  ⭐ How can we create a custom Hook?
 1️⃣ like components, we create a seperate directory for our custom "Hooks"
 
-2️⃣ Create a file, by naming like use-< useForTheHook >.js
+2️⃣ Create a file, by naming like use -> "useForTheHook.js"
 Example:
 	🫣use-counter.js
 
-✅If you call a custom hook in one of your components and that component, for example of registers a state or an effect, then this state and effect will be tied to the component in which you use your custom hook.
+✅If you call a custom hook in one of your components and that component, for example: hook that registers a state or an effect, then this state and effect will be tied to the component in which you use your custom hook.
 
 ✅If we use a custom hook in multiple components, every component will receive its own state.
 
-You can return whatever you wanna return in your custom hooks. Could be an array or an object or a number or a state variable.
+✅You can return whatever you wanna return in your custom hooks. Could be an array or an object or a number or a state variable.
 
 ---------------------------------------Section 18: Diving deep into REDUX🤿-----------------------------------------
 
@@ -1815,19 +1804,15 @@ You can also use both Contexts and Redux in the same application.
 
 REACT CONTEXT vs REDUX😵‍💫
 -> REACT CONTEXT has a couple of potential disadvantages.
-   -> With React Context, you can have a very complex setup and managing state with React Context can become quite complex. You can end up with deeply nested JSX code.
+   -> With React Context, you can have a very complex setup and managing state with React Context can become quite complex. You can end up with deeply nested JSX code.(Context-Soup)
 
--> Performance can be an issue, it works good for low frequency states updates like theme changing, authentication but for high frequency state updates its not well suited - as quoted by an Official React TEAM Member.
+-> Performance can be an issue, it works good for low frequency states updates like theme changing, authentication but for high frequency state updates it's not well suited - as quoted by an Official React TEAM Member.
 
 ❓How REDUX Works?
 
-Redux is all about having one Central Data (state) Store, in your application.
-You have exactly one store. You never have more than one store.
-It's one store, for all your state for your entire application.
+Redux is all about having one Central Data (state) Store, in your application. You have exactly one store. You never have more than one store. It's one store, for all your state for your entire application. In that state you could store authentication, themeing .... etc.
 
-In that state you could store authentication, themeing .... etc.
-
-For this components set up subscriptions, to our Central Store. They subscribe to the store, and whenever the data changes, the store notifies components, and then components can get the data they need, for example the current authentication status, so they get a slice of the Redux store, and they can then use it.
+For this, components set up subscriptions, to our Central Store. They subscribe to the store, and whenever the data changes, the store notifies components, and then components can get the data they need, for example the current authentication status, so they get a slice of the Redux store, and they can then use it.
 
       |--------------------Reducer function
 	|   (forwarded to)        |
@@ -1849,13 +1834,10 @@ Instead for that, we use a concept called REDUCERS. We have a reducer function. 
 
 😵‍💫How do we now connect components and that reducer function?
 
-it will ofcourse be the components that should trigger a data change. It is for example a click on a button in a component that should trigger some data change. So how do we connect that?
-(Trigger)We have actions and components dispatch actions.
+It will ofcourse be the components that should trigger a data change. It is for example a click on a button in a component that should trigger some data change. So how do we connect that?
+-> (Trigger) We have actions and components dispatch actions.
 
-
-Now an action is really just a simple JavaScript object, which describes the kind of operation, the reducers should perform. Therefore, Redux then forwards actions to the reducer, reads that description of the desired operation, and then this operation is performed by the reducer.
-
-So components dispatch actions, which describe what should be done, but don't do it directly, then these actions are forwarded to the reducer, the reducer then does what the action wants, the reducer to do and then the reducer, spits out a new state, which effectively will replace the existing state in that Central Data Store and when that happens, subscribing components are notified, so that they can update their UI.
+Now an action is really just a simple JavaScript object, which describes the kind of operation, the reducers should perform. Therefore, Redux then forwards actions to the reducer, reads that description of the desired operation, and then this operation is performed by the reducer. So components dispatch actions, which describe what should be done, but don't do it directly, then these actions are forwarded to the reducer, the reducer then does what the action wants the reducer to do and then the reducer spits out a new state, which effectively will replace the existing state in that Central Data Store and when that happens, subscribing components are notified, so that they can update their UI.
 
 That's how Redux works!🫣
 
@@ -1866,10 +1848,10 @@ Predictability of Redux is determined by three most important principles as give
 The state of your whole application is stored in an object tree within a single store. As whole application state is stored in a single tree, it makes debugging easy, and development faster.
 
 2️⃣State is Read-only
-The only way to change the state is to emit an action, an object describing what happened. This means nobody can directly change the state of your application.
+The only way to change the state is to dispatch an action, an object describing what happened. This means nobody can directly change the state of your application.
 
 3️⃣Changes are made with pure functions
-To specify how the state tree is transformed by actions, you write pure reducers. A reducer is a central place where state modification takes place. Reducer is a function which takes state and action as arguments, and returns a newly updated state.
+To specify how the state tree is transformed by actions, you write pure reducers. A reducer is a central place where state modification takes place. Reducer is a function which takes "state" and "action" as arguments, and returns a newly updated state.
 
 🪜To install redux, you can follow the below steps −
 
@@ -1887,7 +1869,8 @@ Run the below command in your command prompt to install Redux dev-tools.
 
 	> npm install --save-dev redux-devtools
 
-👥How to use Redux?
+----👥How to use Redux?----
+--REDUCERS--
 A reducer function is a standard JavaScript function, but it will it be called by the Redux library and it will then always receive two pieces of input, two parameters, 
  
 1️⃣ - the old or existing state and 
